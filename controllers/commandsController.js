@@ -3,7 +3,7 @@ const Command = require("../models/Command");
 //GET all commands (with filtering and search)
 exports.getCommands = async (req, res, next) => {
     try {
-        const {tag, category, difficulty, search } = req.query;
+        const { tag, category, difficulty, search } = req.query;
 
         let query = {};
         if (tag) query.tags = tag;
@@ -79,3 +79,4 @@ exports.deleteCommand = async ( req, res, next ) => {
         next(err);
     }
 };
+
