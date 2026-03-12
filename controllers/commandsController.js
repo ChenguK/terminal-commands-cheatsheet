@@ -3,9 +3,11 @@ const Command = require("../models/Command");
 //GET all commands (with filtering and search)
 exports.getCommands = async (req, res, next) => {
     try {
-        const { tag, category, difficulty, search } = req.query;
+        const { tag, category, difficulty, search, page = 1, limit = 10, sort, fields } = req.query;
 
         let query = {};
+
+
         if (tag) query.tags = tag;
         if (category) query.category = category;
         if (difficulty) query.difficulty = difficulty;
@@ -13,10 +15,49 @@ exports.getCommands = async (req, res, next) => {
         if (search) {
             query.$text = { $search: search };
         }
-        
-        const commands = await Command.find(query);
 
-        res.status(200).json(commands);
+        const pageNumber = parseInt(page);
+        const limitNumber = parseInt(limit);
+        let sortOption = {};
+        let fieldSelection = "";
+
+        if (fields) {
+            fieldSelection = fields.split(",").join(" ");
+        }
+
+        if (sort) {
+            const [field, order] = sort.split(":");
+            sortOption[field] = order === "desc" ? -1 : 1;
+        } else {
+            sortOption.createdAt = -1; // Default sorting by newest
+        }
+
+
+        const commands = await Command.find(query)
+            .select(fieldSelection)
+            .sort(sortOption)
+            .skip((pageNumber - 1) * limitNumber)
+            .limit(limitNumber);
+
+        const total = await Command.countDocuments(query);
+        const pages = Math.ceil(total / limitNumber);
+        const hasNextPage = pageNumber < pages;
+        const hasPrevPage = pageNumber > 1;
+        const nextPage = hasNextPage ? pageNumber + 1 : null;
+        const prevPage = hasPrevPage ? pageNumber - 1 : null;
+
+
+        res.status(200).json({
+            total,
+            page: pageNumber,
+            pages,
+            limit: limitNumber,
+            hasNextPage,
+            hasPrevPage,
+            nextPage,
+            prevPage,
+            results: commands
+        });
     }   catch (err) {
         next(err);
     }
