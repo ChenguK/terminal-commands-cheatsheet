@@ -1,67 +1,48 @@
 const Command = require("../models/Command");
+const APIQueryBuilder = require("../utils/apiQueryBuilder");
 
 //GET all commands (with filtering and search)
 exports.getCommands = async (req, res, next) => {
     try {
-        const { tag, category, difficulty, search, page = 1, limit = 10, sort, fields } = req.query;
+        const total = await Command.countDocuments();
 
-        let query = {};
+        const features = new APIQueryBuilder(Command.find(), req.query)
+            .filter()
+            .sort()
+            .limitFields()
+            .paginate();
 
+        const commands = await features.query;
 
-        if (tag) query.tags = tag;
-        if (category) query.category = category;
-        if (difficulty) query.difficulty = difficulty;
+        const pages = Math.ceil(total / features.limit);
 
-        if (search) {
-            query.$text = { $search: search };
+        let page = features.page;
+        if (page > pages) {
+            page = pages;
         }
 
-        const pageNumber = parseInt(page);
-        const limitNumber = parseInt(limit);
-        let sortOption = {};
-        let fieldSelection = "";
-
-        if (fields) {
-            fieldSelection = fields.split(",").join(" ");
-        }
-
-        if (sort) {
-            const [field, order] = sort.split(":");
-            sortOption[field] = order === "desc" ? -1 : 1;
-        } else {
-            sortOption.createdAt = -1; // Default sorting by newest
-        }
-
-
-        const commands = await Command.find(query)
-            .select(fieldSelection)
-            .sort(sortOption)
-            .skip((pageNumber - 1) * limitNumber)
-            .limit(limitNumber);
-
-        const total = await Command.countDocuments(query);
-        const pages = Math.ceil(total / limitNumber);
-        const hasNextPage = pageNumber < pages;
-        const hasPrevPage = pageNumber > 1;
-        const nextPage = hasNextPage ? pageNumber + 1 : null;
-        const prevPage = hasPrevPage ? pageNumber - 1 : null;
-
+        const hasNextPage = page < pages;
+        const hasPrevPage = page > 1;
+    
 
         res.status(200).json({
             total,
-            page: pageNumber,
+            page,
             pages,
-            limit: limitNumber,
+            limit: features.limit,
             hasNextPage,
             hasPrevPage,
-            nextPage,
-            prevPage,
+            nextPage: hasNextPage ? page + 1 : null,
+            prevPage: hasPrevPage ? page - 1 : null,
             results: commands
         });
     }   catch (err) {
         next(err);
     }
 };
+
+
+
 
 // GET single command
 exports.getCommandById = async (req, res, next) => {
@@ -120,4 +101,22 @@ exports.deleteCommand = async ( req, res, next ) => {
         next(err);
     }
 };
+
+exports.toggleFavorite = async (req, res, next) => {
+    try {
+        const command = await Command.findById(req.params.id);
+        
+        if (!command) {
+            return res.status(404).json({ message: "Command not found" });
+        }
+
+        command.favorite = !command.favorite;
+        await command.save();
+
+        res.status(200).json( command );
+
+    } catch (err) {
+        next(err);
+    }
+    };
 

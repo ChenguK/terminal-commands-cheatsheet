@@ -6,6 +6,7 @@ const commandSchema = new mongoose.Schema(
       type: String,
       required: true,
       trim: true,
+      unique: true,
     },
     description: {
       type: String,
@@ -28,6 +29,11 @@ const commandSchema = new mongoose.Schema(
       enum: ["beginner", "intermediate", "advanced"],
       default: "beginner",
     },
+    favorite: {
+      type: Boolean,
+      default: false,
+    },
+
   },
   { timestamps: true }
 );

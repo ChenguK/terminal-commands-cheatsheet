@@ -1,6 +1,8 @@
 const express = require("express");
 const router = express.Router();
 const commandsController = require("../controllers/commandsController");
+const validateCommand = require("../middleware/errorHandler");
+
 
 /**
  * @swagger
@@ -30,7 +32,7 @@ const commandsController = require("../controllers/commandsController");
 router
     .route("/")
     .get(commandsController.getCommands)
-    .post(commandsController.createCommand);
+    .post(validateCommand,commandsController.createCommand);
 
 router
     .route("/:id")
@@ -38,4 +40,6 @@ router
     .put(commandsController.updateCommand)
     .delete(commandsController.deleteCommand);
 
-    module.exports = router;
+router.patch("/:id/favorite", commandsController.toggleFavorite);
+
+module.exports = router;
