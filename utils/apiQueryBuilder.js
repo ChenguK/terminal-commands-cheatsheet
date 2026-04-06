@@ -46,6 +46,19 @@ class APIQueryBuilder {
         return this;
 
     }
+
+    search() {
+        if (this.queryString.search) {
+            const search = this.queryString.search;
+
+            this.query = this.query.find({
+                $text: { $search: search },
+    
+            });
+            this.useRegexFallback = true;
+    }
+        return this;
+}
 }
 
 module.exports = APIQueryBuilder;

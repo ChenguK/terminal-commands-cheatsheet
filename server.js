@@ -1,7 +1,7 @@
 const mongoose = require("mongoose");
 require("dotenv").config();
 
-const app = require("./app");   // ← use the configured Express app
+const app = require("./app");
 
 const PORT = process.env.PORT || 3000;
 

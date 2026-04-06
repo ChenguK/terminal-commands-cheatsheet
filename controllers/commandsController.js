@@ -3,44 +3,80 @@ const APIQueryBuilder = require("../utils/apiQueryBuilder");
 
 //GET all commands (with filtering and search)
 exports.getCommands = async (req, res, next) => {
-    try {
-        const total = await Command.countDocuments();
+  try {
+    const features = new APIQueryBuilder(Command.find(), req.query)
+      .filter()
+      .search()
+      .sort()
+      .limitFields()
+      .paginate();
 
-        const features = new APIQueryBuilder(Command.find(), req.query)
-            .filter()
-            .sort()
-            .limitFields()
-            .paginate();
+    let commands = await features.query;
 
-        const commands = await features.query;
+    if (req.query.search && commands.length === 0) {
+        commands = await Command.find({
+            $or: [
+                { name: { $regex: req.query.search, $options: "i" } },
+                { description: { $regex: req.query.search, $options: "i" } },
+                { tags: { $regex: req.query.search, $options: "i" } },
+            ],
+        });
+    }
 
-        const pages = Math.ceil(total / features.limit);
+    const total = commands.length;
+    const limit = features.limit || 10;
+    let page = features.page || 1;
 
-        let page = features.page;
-        if (page > pages) {
-            page = pages;
-        }
+    const pages = Math.ceil(total / limit) || 1;
 
-        const hasNextPage = page < pages;
-        const hasPrevPage = page > 1;
+    if (page > pages) page = pages;
+
+    const hasNextPage = page < pages;
+    const hasPrevPage = page > 1;
+
+    const nextPage = hasNextPage ? page + 1 : null;
+    const previousPage = hasPrevPage ? page - 1 : null;
+
+    const start = (page - 1) * limit;
+    const end = start + limit;
+
+    commands = commands.slice(start, end);
+ 
+
+    let formattedCommands = commands;
     
 
-        res.status(200).json({
-            total,
-            page,
-            pages,
-            limit: features.limit,
-            hasNextPage,
-            hasPrevPage,
-            nextPage: hasNextPage ? page + 1 : null,
-            prevPage: hasPrevPage ? page - 1 : null,
-            results: commands
-        });
-    }   catch (err) {
-        next(err);
+    // beginner mode (AFTER fetching)
+    if (req.query.mode === "beginner") {
+      formattedCommands = commands.map(cmd => ({
+        name: cmd.name,
+        whatItDoes: cmd.explanation || cmd.description,
+        tryThis: cmd.example,
+        difficulty: cmd.difficulty
+      }));
     }
-};
 
+    res.status(200).json({
+      success: true,
+      message: "Commands retrieved successfully",
+      info: {
+        currentPage: page,
+        totalPages: pages,
+        totalCommands: total,
+        next: nextPage
+          ? `/api/commands?page=${nextPage}&limit=${limit}`
+          : null,
+        previous: previousPage
+          ? `/api/commands?page=${previousPage}&limit=${limit}`
+          : null
+      },
+      commands: formattedCommands,
+    });
+
+  } catch (err) {
+    next(err);
+  }
+};
 
 
 

@@ -33,6 +33,9 @@ const commandSchema = new mongoose.Schema(
       type: Boolean,
       default: false,
     },
+      explanation: {
+        type: String,
+      }
 
   },
   { timestamps: true }
