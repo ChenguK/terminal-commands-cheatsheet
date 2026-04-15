@@ -52,10 +52,13 @@ class APIQueryBuilder {
             const search = this.queryString.search;
 
             this.query = this.query.find({
-                $text: { $search: search },
-    
+              $or: [
+                { name: { $regex: search, $options: "i" } },
+                { description: { $regex: search, $options: "i" } },
+                { tags: { $regex: search, $options: "i" } },
+              ],
             });
-            this.useRegexFallback = true;
+            this.isSearch = true;
     }
         return this;
 }

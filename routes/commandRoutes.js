@@ -7,20 +7,6 @@ const validateCommand = require("../middleware/errorHandler");
 /**
  * @swagger
  * /api/commands:
-*   post:
-*     summary: Create a new command
-*     requestBody:
-*       required: true
-*       content:
-*         application/json:
-*           example:
-*             name: ls
-*             description: List directory contents
-*             category: linux
-*             difficulty: beginner
-*     responses:
-*       201:
-*         description: Command created successfully
  *   get:
  *     summary: Get all commands
  *     description: Retrieve a paginated list of CLI commands
@@ -29,33 +15,80 @@ const validateCommand = require("../middleware/errorHandler");
  *         name: page
  *         schema:
  *           type: integer
- *         description: Page number
  *       - in: query
  *         name: limit
  *         schema:
  *           type: integer
- *         description: Number of results per page
  *     responses:
  *       200:
  *         description: A paginated list of commands
  *         content:
  *           application/json:
- *             example:
- *               total: 6
- *               page: 1
- *               pages: 2
- *               limit: 5
- *               hasNextPage: true
- *               hasPrevPage: false
- *               nextPage: 2
- *               prevPage: null
- *               results:
- *                 - name: ls
- *                   description: List directory contents
- *                   category: linux
- *                   difficulty: beginner
- *                   favorite: false
+ *             schema:
+ *               $ref: '#/components/schemas/CommandResponse'
  */
+/**
+ * @swagger
+ * /api/commands:
+ *   post:
+ *     summary: Create a new command
+ *     requestBody:
+ *       required: true
+ *       content:
+ *         application/json:
+ *           schema:
+ *             $ref: '#/components/schemas/Command'
+ *     responses:
+ *       201:
+ *         description: Command created
+ *         content:
+ *           application/json:
+ *             schema:
+ *               $ref: '#/components/schemas/Command'
+ */
+/**
+ * @swagger
+ * /api/commands/{id}:
+ *   get:
+ *     summary: Get a command by ID
+ *     parameters:
+ *       - in: path
+ *         name: id
+ *         required: true
+ *         schema:
+ *           type: string
+ *     responses:
+ *       200:
+ *         description: A single command
+ *         content:
+ *           application/json:
+ *             schema:
+ *               $ref: '#/components/schemas/Command'
+ *       404:
+ *         description: Command not found
+ */
+/**
+ * @swagger
+ * /api/commands/{id}/favorite:
+ *   patch:
+ *     summary: Toggle favorite status
+ *     parameters:
+ *       - in: path
+ *         name: id
+ *         required: true
+ *         schema:
+ *           type: string
+ *     responses:
+ *       200:
+ *         description: Updated command
+ *         content:
+ *           application/json:
+ *             schema:
+ *               $ref: '#/components/schemas/Command'
+ */
+
+
+
 
 
 

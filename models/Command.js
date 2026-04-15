@@ -29,10 +29,6 @@ const commandSchema = new mongoose.Schema(
       enum: ["beginner", "intermediate", "advanced"],
       default: "beginner",
     },
-    favorite: {
-      type: Boolean,
-      default: false,
-    },
       explanation: {
         type: String,
       }

@@ -1,76 +1,29 @@
-const mongoose = require("mongoose");
 require("dotenv").config();
-
+const mongoose = require("mongoose");
 const Command = require("../models/Command");
+const commands = require("./commands.json");
 
-const commands = [
-    {
-        name: "ls",
-        description: "List directory contents",
-        category: "linux",
-        tags: ["filesystem", "navigation"],
-        example: "ls -la",
-        difficulty: "beginner"
-    },
-    {
-        name: "pwd",
-        description: "Print working directory",
-        tags: ["filesystem"],
-        example: "pwd",
-        category: "beginner"
-    },
-    {
-        name: "mkdir",
-        description: "Create a new directory",
-        category: "linux",
-        tags: ["filesystem"],
-        example: "mkdir new_folder",
-        difficulty: "beginner"
-    },
-    {
-        name: "grep",
-        description: "Search text using patterns",
-        category: "linux",
-        tags: ["search", "text"],
-        example: "grep 'error' log.txt",
-        difficulty: "intermediate"
-    },
-    {
-        name: "curl",
-        description: "Transfer data from a server",
-        category: "network",
-        tags: ["http", "api"],
-        example: "curl https://example.com",
-        difficulty: "intermediate"
-    },
-    {
-        name: "git clone",
-        description: "Clone a repository",
-        category: "git",
-        tags: ["version-control"],
-        example: "git clone https://github.com/user/repo.git",
-        difficulty: "beginner"
+
+const seedDB = async () => {
+  try {
+    await mongoose.connect(process.env.MONGO_URI);
+
+    console.log("MongoDB connected");
+
+    // safer: only wipe in dev
+    if (process.env.NODE_ENV !== "production") {
+      await Command.deleteMany();
+      console.log("Old data cleared");
     }
-];
 
-async function seed() {
-    try {
+    await Command.insertMany(commands);
 
-        await mongoose.connect(process.env.MONGO_URI);
-        console.log("MongoDB connected");
+    console.log("✅ Database seeded!");
+    process.exit();
+  } catch (err) {
+    console.error("❌ Seeding error:", err);
+    process.exit(1);
+  }
+};
 
-        await Command.deleteMany({});
-        console.log("Old commands removed");
-
-        await Command.insertMany(commands);
-        console.log("Seed data inserted");
-    
-        process.exit();
-
-    } catch (err) {
-        console.error("Seeding failed:", err);
-        process.exit(1);
-    }
-}
-
-seed();
+seedDB();
