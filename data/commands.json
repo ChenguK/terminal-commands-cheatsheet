@@ -15,7 +15,46 @@
     "example": "cd /home/user",
     "difficulty": "beginner"
   },
-  
+   {
+    "name": "pwd",
+    "description": "Print working directory",
+    "category": "linux",
+    "tags": ["filesystem"],
+    "example": "pwd",
+    "difficulty": "beginner"
+  },
+  {
+    "name": "mkdir",
+    "description": "Create a new directory",
+    "category": "linux",
+    "tags": ["filesystem"],
+    "example": "mkdir new_folder",
+    "difficulty": "beginner"
+  },
+  {
+    "name": "rm",
+    "description": "Remove files or directories",
+    "category": "linux",
+    "tags": ["filesystem"],
+    "example": "rm -rf folder",
+    "difficulty": "intermediate"
+  },
+  {
+    "name": "cp",
+    "description": "Copy files",
+    "category": "linux",
+    "tags": ["filesystem"],
+    "example": "cp file.txt backup.txt",
+    "difficulty": "beginner"
+  },
+  {
+    "name": "mv",
+    "description": "Move or rename files",
+    "category": "linux",
+    "tags": ["filesystem"],
+    "example": "mv file.txt newfile.txt",
+    "difficulty": "beginner"
+  },
   {
     "name": "git clone",
     "description": "Clone a repository",
@@ -23,6 +62,30 @@
     "tags": ["version-control"],
     "example": "git clone https://github.com/user/repo.git",
     "difficulty": "beginner"
+  },
+  {
+    "name": "git status",
+    "description": "Show repo status",
+    "category": "git",
+    "tags": ["version-control"],
+    "example": "git status",
+    "difficulty": "beginner"
+  },
+  {
+    "name": "git commit",
+    "description": "Commit changes",
+    "category": "git",
+    "tags": ["version-control"],
+    "example": "git commit -m 'message'",
+    "difficulty": "beginner"
+  },
+  {
+    "name": "git push",
+    "description": "Push changes",
+    "category": "git",
+    "tags": ["version-control"],
+    "example": "git push origin main",
+    "difficulty": "intermediate"
   },
   {
     "name": "grep",
@@ -33,11 +96,356 @@
     "difficulty": "intermediate"
   },
   {
+    "name": "find",
+    "description": "Search for files",
+    "category": "linux",
+    "tags": ["search", "filesystem"],
+    "example": "find . -name '*.js'",
+    "difficulty": "intermediate"
+  },
+  {
+    "name": "chmod",
+    "description": "Change file permissions",
+    "category": "linux",
+    "tags": ["permissions"],
+    "example": "chmod 755 script.sh",
+    "difficulty": "intermediate"
+  },
+  {
+    "name": "chown",
+    "description": "Change file owner and group",
+    "category": "linux",
+    "tags": ["permissions"],
+    "example": "chown user:group file.txt",
+    "difficulty": "intermediate"
+},
+  {
     "name": "curl",
     "description": "Transfer data from a server",
     "category": "network",
     "tags": ["http", "api"],
     "example": "curl https://example.com",
     "difficulty": "intermediate"
-  }
+  },
+  {
+    "name": "npm install",
+    "description": "Install dependencies",
+    "category": "node",
+    "tags": ["package-manager"],
+    "example": "npm install express",
+    "difficulty": "beginner"
+  },
+  {
+    "name": "docker build",
+    "description": "Build Docker image",
+    "category": "docker",
+    "tags": ["containers"],
+    "example": "docker build -t app .",
+    "difficulty": "intermediate"
+  },
+  {
+    "name": "docker run",
+    "description": "Run Docker container",
+    "category": "docker",
+    "tags": ["containers"],
+    "example": "docker run -p 80:80 app",
+    "difficulty": "intermediate"
+  },
+{
+    "name": "ps",
+    "description": "List running processes",
+    "category": "linux",
+    "tags": ["processes"],
+    "example": "ps aux",
+    "difficulty": "beginner"
+},
+{
+    "name": "top",
+    "description": "Display system tasks",
+    "category": "linux",
+    "tags": ["processes", "monitoring"],
+    "example": "top",
+    "difficulty": "intermediate"
+},
+{
+    "name": "htop",
+    "description": "Interactive process viewer",
+    "category": "linux",
+    "tags": ["processes", "monitoring"],
+    "example": "htop",
+    "difficulty": "intermediate"
+},
+{
+    "name": "kill",
+    "description": "Terminate processes",
+    "category": "linux",
+    "tags": ["processes"],
+    "example": "kill -9 1234",
+    "difficulty": "intermediate"
+},
+{
+    "name": "netstat",
+    "description": "Network connections and statistics",
+    "category": "network",          
+    "tags": ["network"],
+    "example": "netstat -tuln",
+    "difficulty": "intermediate"
+},
+{
+    "name": "ping",
+    "description": "Test network connectivity",
+    "category": "network",
+    "tags": ["network"],
+    "example": "ping google.com",
+    "difficulty": "beginner"
+},
+{
+    "name": "traceroute",
+    "description": "Trace network path",
+    "category": "network",
+    "tags": ["network"],
+    "example": "traceroute google.com",
+    "difficulty": "intermediate"
+},
+{
+    "name": "ifconfig",
+    "description": "Configure network interfaces",
+    "category": "network",
+    "tags": ["network"],
+    "example": "ifconfig eth0",
+    "difficulty": "intermediate"
+},
+{
+    "name": "ip",
+    "description": "Show/manipulate routing, devices, policy routing",
+    "category": "network",                  
+    "tags": ["network"],
+    "example": "ip addr show",
+    "difficulty": "intermediate"
+},
+{
+    "name": "systemctl",
+    "description": "Control the systemd system and service manager",
+    "category": "linux",
+    "tags": ["services"],
+    "example": "systemctl status nginx",
+    "difficulty": "intermediate"
+},
+{
+    "name": "journalctl",
+    "description": "Query the systemd journal",
+    "category": "linux",
+    "tags": ["logs"],
+    "example": "journalctl -u nginx",
+    "difficulty": "intermediate"
+},
+{
+    "name": "df",
+    "description": "Report file system disk space usage",
+    "category": "linux",
+    "tags": ["filesystem"],
+    "example": "df -h",
+    "difficulty": "beginner"
+},
+{
+    "name": "du",
+    "description": "Estimate file space usage",
+    "category": "linux",
+    "tags": ["filesystem"],
+    "example": "du -sh *",
+    "difficulty": "intermediate"
+},
+{
+    "name": "free",
+    "description": "Display memory usage",
+    "category": "linux",
+    "tags": ["memory"],
+    "example": "free -h",
+    "difficulty": "beginner"
+},
+{
+    "name": "uptime",
+    "description": "Show how long the system has been running",
+    "category": "linux",
+    "tags": ["system"],
+    "example": "uptime",
+    "difficulty": "beginner"
+},
+{
+    "name": "whoami",
+    "description": "Display the current user",
+    "category": "linux",
+    "tags": ["user"],
+    "example": "whoami",
+    "difficulty": "beginner"
+},
+{
+    "name": "id",
+    "description": "Display user ID and group ID",
+    "category": "linux",
+    "tags": ["user"],
+    "example": "id",
+    "difficulty": "beginner"
+},
+{
+    "name": "sudo",
+    "description": "Execute a command as another user",
+    "category": "linux",
+    "tags": ["permissions"],
+    "example": "sudo apt update",
+    "difficulty": "intermediate"
+},
+{
+    "name": "su",
+    "description": "Switch user",
+    "category": "linux",
+    "tags": ["user"],
+    "example": "su - username",
+    "difficulty": "intermediate"
+},
+{
+    "name": "alias",
+    "description": "Create an alias for a command",
+    "category": "linux",
+    "tags": ["shell"],
+    "example": "alias ll='ls -la'",
+    "difficulty": "intermediate"
+},
+{
+    "name": "env",
+    "description": "Display environment variables",
+    "category": "linux",
+    "tags": ["environment"],
+    "example": "env",
+    "difficulty": "beginner"
+},
+{
+    "name": "export",
+    "description": "Set environment variables",
+    "category": "linux",
+    "tags": ["environment"],
+    "example": "export PATH=$PATH:/new/path",
+    "difficulty": "intermediate"
+},
+{
+    "name": "source",
+    "description": "Execute commands from a file in the current shell",
+    "category": "linux",
+    "tags": ["shell"],
+    "example": "source ~/.bashrc",
+    "difficulty": "intermediate"
+},
+{
+    "name": "history",
+    "description": "Show command history",
+    "category": "linux",
+    "tags": ["shell"],
+    "example": "history",
+    "difficulty": "beginner"
+},
+{
+    "name": "clear",
+    "description": "Clear the terminal screen",
+    "category": "linux",
+    "tags": ["shell"],
+    "example": "clear",
+    "difficulty": "beginner"
+},      
+{
+    "name": "man",
+    "description": "Display the manual for a command",
+"category": "linux",
+    "tags": ["help"],
+    "example": "man ls",
+    "difficulty": "beginner"
+},
+{
+    "name": "help",
+    "description": "Display help information for a command",
+    "category": "linux",
+    "tags": ["help"],
+    "example": "ls --help",
+    "difficulty": "beginner"
+},
+{
+    "name": "uptime",
+    "description": "Show how long the system has been running",
+    "category": "linux",
+    "tags": ["system"],
+    "example": "uptime",
+    "difficulty": "beginner"
+},
+{
+    "name": "date",
+    "description": "Display or set the system date and time",
+    "category": "linux",
+    "tags": ["system"],
+    "example": "date",
+    "difficulty": "beginner"
+},
+{
+    "name": "cal",
+    "description": "Display a calendar",
+    "category": "linux",
+    "tags": ["system"],
+    "example": "cal",
+    "difficulty": "beginner"
+},
+{
+    "name": "who",
+    "description": "Show who is logged in",
+    "category": "linux",
+    "tags": ["user"],
+    "example": "who",
+    "difficulty": "beginner"
+},
+{
+    "name": "w",
+    "description": "Show who is logged in and what they are doing",
+    "category": "linux",
+    "tags": ["user"],
+    "example": "w",
+    "difficulty": "intermediate"
+},
+{
+    "name": "last",
+    "description": "Show last logins",
+    "category": "linux",
+    "tags": ["user"],
+    "example": "last",
+    "difficulty": "intermediate"
+},
+{
+    "name": "uptime",
+    "description": "Show how long the system has been running",
+    "category": "linux",
+    "tags": ["system"],
+    "example": "uptime",
+    "difficulty": "beginner"
+},
+{
+    "name": "hostname",
+    "description": "Show or set the system's hostname",
+    "category": "linux",
+    "tags": ["system"],
+    "example": "hostname",
+    "difficulty": "beginner"
+},
+{
+    "name": "uname",
+    "description": "Show system information",
+    "category": "linux",
+    "tags": ["system"],
+    "example": "uname -a",
+    "difficulty": "beginner"
+},
+{
+    "name": "lsb_release",
+    "description": "Show Linux distribution information",
+    "category": "linux",
+    "tags": ["system"],
+    "example": "lsb_release -a",
+    "difficulty": "intermediate"
+}
+
 ]
