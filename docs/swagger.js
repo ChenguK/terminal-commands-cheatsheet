@@ -27,11 +27,9 @@ const options = {
               example: "69b43c92981fa6484ab27951",
             },
             name: {
-              type: "string",
               example: "ls",
             },
             description: {
-              type: "string",
               example: "List directory contents",
             },
             category: {
@@ -50,12 +48,10 @@ const options = {
               example: "ls -la",
             },
             difficulty: {
-              type: "string",
               enum: ["beginner", "intermediate", "advanced"],
               example: "beginner",
             },
             favorite: {
-              type: "boolean",
               example: false,
             },
             createdAt: {
@@ -84,13 +80,32 @@ const options = {
               type: "array",
               items: {
                 $ref: "#/components/schemas/Command",
-              },
+                    },
+                },
             },
+            example: {
+                total: 10,
+                page: 1,
+                pages: 2,
+                limit: 5,
+                hasNextPage: true,
+                hasPrevPage: false,
+                nextPage: 2,
+                prevPage: null,
+                results: [
+                    {
+                    name: "ls",
+                    description: "List directory contents",
+                    category: "linux",
+                    favorite: true
+                    }
+                ]
+                }
+
           },
         },
       },
     },
-  },
 
   apis: [path.join(__dirname, "../routes/*.js")],
 };

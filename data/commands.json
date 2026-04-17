@@ -368,14 +368,6 @@
     "difficulty": "beginner"
 },
 {
-    "name": "uptime",
-    "description": "Show how long the system has been running",
-    "category": "linux",
-    "tags": ["system"],
-    "example": "uptime",
-    "difficulty": "beginner"
-},
-{
     "name": "date",
     "description": "Display or set the system date and time",
     "category": "linux",
@@ -414,14 +406,6 @@
     "tags": ["user"],
     "example": "last",
     "difficulty": "intermediate"
-},
-{
-    "name": "uptime",
-    "description": "Show how long the system has been running",
-    "category": "linux",
-    "tags": ["system"],
-    "example": "uptime",
-    "difficulty": "beginner"
 },
 {
     "name": "hostname",

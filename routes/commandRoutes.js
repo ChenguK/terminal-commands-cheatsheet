@@ -2,6 +2,7 @@ const express = require("express");
 const router = express.Router();
 const commandsController = require("../controllers/commandsController");
 const validateCommand = require("../middleware/errorHandler");
+const Command = require("../models/Command");
 
 
 /**
@@ -19,6 +20,21 @@ const validateCommand = require("../middleware/errorHandler");
  *         name: limit
  *         schema:
  *           type: integer
+ *       - in: query
+ *         name: sort
+ *         schema:
+ *           type: string
+ *           example: name
+ *       - in: query
+ *         name: fields
+ *         schema:
+ *           type: string
+ *           example: name,description
+ *       - in: query
+ *         name: search
+ *         schema:
+ *           type: string
+ *           example: git
  *     responses:
  *       200:
  *         description: A paginated list of commands
@@ -27,6 +43,7 @@ const validateCommand = require("../middleware/errorHandler");
  *             schema:
  *               $ref: '#/components/schemas/CommandResponse'
  */
+
 /**
  * @swagger
  * /api/commands:
@@ -48,15 +65,15 @@ const validateCommand = require("../middleware/errorHandler");
  */
 /**
  * @swagger
- * /api/commands/{id}:
+ * /api/commands/{name}:
  *   get:
- *     summary: Get a command by ID
+ *     summary: Get a command by Name
  *     parameters:
  *       - in: path
- *         name: id
+ *         name: name
  *         required: true
  *         schema:
- *           type: string
+ *         type: string
  *     responses:
  *       200:
  *         description: A single command
@@ -69,15 +86,21 @@ const validateCommand = require("../middleware/errorHandler");
  */
 /**
  * @swagger
- * /api/commands/{id}/favorite:
+ * /api/commands/{name}/favorite:
  *   patch:
  *     summary: Toggle favorite status
  *     parameters:
  *       - in: path
- *         name: id
+ *         name: name
  *         required: true
  *         schema:
  *           type: string
+ *       - in: header
+ *         name: x-user-id
+ *         required: false
+ *         schema:
+ *           type: string
+ *         description: Optional user identifier for personalized favorites
  *     responses:
  *       200:
  *         description: Updated command
@@ -88,6 +111,26 @@ const validateCommand = require("../middleware/errorHandler");
  */
 
 
+/**
+ * @swagger
+ * /api/commands/random:
+ *   get:
+ *     summary: Get a random command
+ *     description: Returns a random CLI command
+ *     responses:
+ *       200:
+ *         description: A random command
+ *         content:
+ *           application/json:
+ *             schema:
+ *               type: object
+ *               properties:
+ *                 message:
+ *                   type: string
+ *                   example: Try this command today!
+ *                 command:
+ *                   $ref: '#/components/schemas/Command'
+ */
 
 
 
@@ -96,12 +139,6 @@ router
     .route("/")
     .get(commandsController.getCommands)
     .post(validateCommand,commandsController.createCommand);
-
-router
-    .route("/:id")
-    .get(commandsController.getCommandById)
-    .put(commandsController.updateCommand)
-    .delete(commandsController.deleteCommand);
 
 router.get("/random", async ( req, res) => {
     const count = await Command.countDocuments();
@@ -115,6 +152,14 @@ router.get("/random", async ( req, res) => {
     });
 });
 
-router.patch("/:id/favorite", commandsController.toggleFavorite);
+router
+    .route("/:name")
+    .get(commandsController.getCommandByName)
+    .put(commandsController.updateCommand)
+    .delete(commandsController.deleteCommand);
+
+
+
+router.patch("/:name/favorite", commandsController.toggleFavorite);
 
 module.exports = router;

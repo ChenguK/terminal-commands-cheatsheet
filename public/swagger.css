@@ -1,0 +1,13 @@
+/* Remove Try it out button */
+.try-out { display: none !important; }
+
+/* Remove servers */
+.servers { display: none !important; }
+
+/* Remove response headers */
+.responses-wrapper .response-col_status {
+  display: none;
+}
+
+/* Hide schemas section */
+.models { display: none !important; }

@@ -2,7 +2,7 @@ const mongoose = require("mongoose");
 
 const favoriteSchema = new mongoose.Schema({
   userId: {
-    type: String, // later: ObjectId when you add auth
+    type: String, // later: ObjectName when you add auth
     required: true,
   },
   commandId: {
@@ -10,9 +10,12 @@ const favoriteSchema = new mongoose.Schema({
     ref: "Command",
     required: true,
   },
+  commandName: {
+    type: String,
+  },
 }, { timestamps: true });
 
 // prevent duplicates
-favoriteSchema.index({ userId: 1, commandId: 1 }, { unique: true });
+favoriteSchema.index({ userId: 1, commandName: 1 }, { unique: true });
 
 module.exports = mongoose.model("Favorite", favoriteSchema);

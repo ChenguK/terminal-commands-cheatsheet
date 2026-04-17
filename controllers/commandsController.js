@@ -57,7 +57,7 @@ exports.getCommands = async (req, res, next) => {
         .sort((a, b) => b.score - a.score)
         .map(({ score, ...rest }) => rest);
 
-        const userId = req.user.id || "public";
+        const userId = req.headers["x-user-id"] || "public";
 
         const favorites = await Favorite.find({ userId }).select("commandId");
 
@@ -65,8 +65,8 @@ exports.getCommands = async (req, res, next) => {
         favorites.map(f => f.commandId.toString())
         );
 
-        const resultsWithFavorites = commands.map(cmd => ({
-        ...cmd.toObject(),
+        const resultsWithFavorites = filtered.map(cmd => ({
+        ...cmd,
         favorite: favoriteIds.has(cmd._id.toString())
         }));
 
@@ -94,6 +94,20 @@ exports.getCommands = async (req, res, next) => {
 
     const commands = await features.query;
 
+    const userId = req.headers["x-user-id"] || "public";
+
+    const favorites = await Favorite.find({ userId }).select("commandId");
+
+    const favoriteIds = new Set(
+    favorites.map(f => f.commandId.toString())
+    );
+
+    const resultsWithFavorites = commands.map(cmd => ({
+    ...cmd.toObject(),
+    favorite: favoriteIds.has(cmd._id.toString())
+}));
+
+
     // count AFTER filters applied (but BEFORE pagination)
     const total = await Command.countDocuments(
       features.query.getFilter()
@@ -116,7 +130,7 @@ exports.getCommands = async (req, res, next) => {
       hasPrevPage,
       nextPage: hasNextPage ? page + 1 : null,
       prevPage: hasPrevPage ? page - 1 : null,
-      results: commands,
+      results: resultsWithFavorites,
     });
   } catch (err) {
     next(err);
@@ -124,15 +138,28 @@ exports.getCommands = async (req, res, next) => {
 };
 
 // GET single command
-exports.getCommandById = async (req, res, next) => {
+exports.getCommandByName = async (req, res, next) => {
   try {
-    const command = await Command.findById(req.params.id);
+    const command = await Command.findOne({ 
+        name: req.params.name.toLowerCase()
+    });
 
     if (!command) {
       return res.status(404).json({ message: "Command not found" });
     }
 
-    res.status(200).json(command);
+    const userId = req.headers["x-user-id"] || "public";
+
+    const favorite = await Favorite.findOne({
+    userId,
+    commandId: command._id
+    });
+
+    res.status(200).json({
+    ...command.toObject(),
+    favorite: !!favorite
+    });
+
   } catch (err) {
     next(err);
   }
@@ -151,8 +178,8 @@ exports.createCommand = async (req, res, next) => {
 // UPDATE command
 exports.updateCommand = async (req, res, next) => {
   try {
-    const command = await Command.findByIdAndUpdate(
-      req.params.id,
+    const command = await Command.findOneAndUpdate(
+      { name: req.params.name.toLowerCase() },
       req.body,
       { new: true, runValidators: true }
     );
@@ -170,7 +197,9 @@ exports.updateCommand = async (req, res, next) => {
 //  DELETE command
 exports.deleteCommand = async (req, res, next) => {
   try {
-    const command = await Command.findByIdAndDelete(req.params.id);
+    const command = await Command.findOneAndDelete(
+        { name: req.params.name.toLowerCase() 
+        });
 
     if (!command) {
       return res.status(404).json({ message: "Command not found" });
@@ -186,24 +215,46 @@ exports.deleteCommand = async (req, res, next) => {
 
 exports.toggleFavorite = async (req, res, next) => {
   try {
-    const userId = req.headers["x-user-id"] || "public"; // 👈 key idea
+    const userId = req.headers["x-user-id"] || "public"; 
+
+    // Find command by name instead of ID for better UX
+    const searchTerm = req.params.name.toLowerCase();
+
+    const command = await Command.findOne({
+        $or: [
+            { slug: searchTerm.replace(/\s+/g, "-") },
+            { name: searchTerm }
+        ]
+    });
+
+    if (!command) {
+      return res.status(404).json({
+        success: false,
+        message: "Command not found"
+      });
+    }
 
     const existing = await Favorite.findOne({
       userId,
-      commandId: req.params.id
+      commandId: command._id
     });
 
     if (existing) {
       await existing.deleteOne();
-      return res.json({ favorite: false });
+      return res.json({ 
+        success: true,
+        favorite: false });
     }
 
     await Favorite.create({
       userId,
-      commandId: req.params.id
+      commandId: command._id,
+      commandName: command.name
     });
 
-    res.json({ favorite: true });
+    res.json({ 
+        success: true, 
+        favorite: true });
 
   } catch (err) {
     next(err);

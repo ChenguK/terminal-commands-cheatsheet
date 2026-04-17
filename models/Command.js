@@ -29,9 +29,14 @@ const commandSchema = new mongoose.Schema(
       enum: ["beginner", "intermediate", "advanced"],
       default: "beginner",
     },
-      explanation: {
-        type: String,
-      }
+    explanation: {
+      type: String,
+    },
+    slug: {
+      type: String,
+      lowercase: true,
+      unique: true,
+    },
 
   },
   { timestamps: true }
@@ -42,6 +47,14 @@ commandSchema.index({
   name: "text",
   description: "text",
   tags: "text",
+});
+
+commandSchema.pre("save", function (next) {
+  this.slug = this.name
+  .toLowerCase()
+  .replace(/\s+/g, "-");
+  
+  next();
 });
 
 module.exports = mongoose.model("Command", commandSchema);
