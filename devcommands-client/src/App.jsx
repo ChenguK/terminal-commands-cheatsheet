@@ -1,122 +1,138 @@
-import { useState } from 'react'
-import reactLogo from './assets/react.svg'
-import viteLogo from './assets/vite.svg'
-import heroImg from './assets/hero.png'
-import './App.css'
+import { useEffect, useState, useCallback } from "react";
+import SearchBar from "./components/SearchBar";
+import CommandList from "./components/CommandList";
+import AddCommandForm from "./components/AddCommandForm";
+import {
+  fetchCommands,
+  toggleFavorite,
+  createCommand
+} from "./services/api";
 
 function App() {
-  const [count, setCount] = useState(0)
+  const [initialLoading, setInitialLoading] = useState(true);
+  const [searchLoading, setSearchLoading] = useState(false);
+  const [commands, setCommands] = useState([]);
+  const [showForm, setShowForm] = useState(false);
+
+  const cache = {};
+
+  const loadCommands = useCallback(async (search = "") => {
+    // first page load
+    if (commands.length === 0) {
+      setInitialLoading(true);
+    } else {
+      setSearchLoading(true);
+    }
+
+  try {
+    const data = await fetchCommands(search);
+    setCommands(data.results || []);
+  } catch (err) {
+    if (err.name === "AbortError") {
+      console.error("Error", err);
+    }
+  } finally {
+    setInitialLoading(false);
+    setSearchLoading(false);
+  }
+  }, [commands.length]);
+
+  useEffect(() => {
+    loadCommands();
+  }, [loadCommands]);
+
+  const handleToggle = async (name) => {
+    // optimistic UI update
+    setCommands((prev) =>
+      prev.map((cmd) =>
+        cmd.name === name
+          ? { ...cmd, favorite: !cmd.favorite }
+          : cmd
+      )
+    );
+
+    try {
+      await toggleFavorite(name);
+    } catch (error) {
+      // rollback if API fails
+      loadCommands();
+    }
+  };
+
+  const handleAdd = async (command) => {
+    await createCommand(command);
+    loadCommands();
+    setShowForm(false);
+  };
 
   return (
-    <>
-      <section id="center">
-        <div className="hero">
-          <img src={heroImg} className="base" width="170" height="179" alt="" />
-          <img src={reactLogo} className="framework" alt="React logo" />
-          <img src={viteLogo} className="vite" alt="Vite logo" />
-        </div>
-        <div>
-          <h1>Get started</h1>
-          <p>
-            Edit <code>src/App.jsx</code> and save to test <code>HMR</code>
-          </p>
-        </div>
+    <div style={styles.page}>
+      <div style={styles.container}>
+        <h1 style={styles.title}>DevCommands</h1>
+
+        <SearchBar onSearch={loadCommands} />
+        {searchLoading && (
+          <p style={styles.searching}>Searching...</p>
+          )}
+
         <button
-          type="button"
-          className="counter"
-          onClick={() => setCount((count) => count + 1)}
+          style={styles.addButton}
+          onClick={() => setShowForm((prev) => !prev)}
+          onMouseEnter={(e) => (e.target.style.opacity = 0.8)}
+          onMouseLeave={(e) => (e.target.style.opacity = 1)}
         >
-          Count is {count}
+          ➕ Add to API
         </button>
-      </section>
 
-      <div className="ticks"></div>
+        {showForm && <AddCommandForm onAdd={handleAdd} />}
 
-      <section id="next-steps">
-        <div id="docs">
-          <svg className="icon" role="presentation" aria-hidden="true">
-            <use href="/icons.svg#documentation-icon"></use>
-          </svg>
-          <h2>Documentation</h2>
-          <p>Your questions, answered</p>
-          <ul>
-            <li>
-              <a href="https://vite.dev/" target="_blank">
-                <img className="logo" src={viteLogo} alt="" />
-                Explore Vite
-              </a>
-            </li>
-            <li>
-              <a href="https://react.dev/" target="_blank">
-                <img className="button-icon" src={reactLogo} alt="" />
-                Learn more
-              </a>
-            </li>
-          </ul>
-        </div>
-        <div id="social">
-          <svg className="icon" role="presentation" aria-hidden="true">
-            <use href="/icons.svg#social-icon"></use>
-          </svg>
-          <h2>Connect with us</h2>
-          <p>Join the Vite community</p>
-          <ul>
-            <li>
-              <a href="https://github.com/vitejs/vite" target="_blank">
-                <svg
-                  className="button-icon"
-                  role="presentation"
-                  aria-hidden="true"
-                >
-                  <use href="/icons.svg#github-icon"></use>
-                </svg>
-                GitHub
-              </a>
-            </li>
-            <li>
-              <a href="https://chat.vite.dev/" target="_blank">
-                <svg
-                  className="button-icon"
-                  role="presentation"
-                  aria-hidden="true"
-                >
-                  <use href="/icons.svg#discord-icon"></use>
-                </svg>
-                Discord
-              </a>
-            </li>
-            <li>
-              <a href="https://x.com/vite_js" target="_blank">
-                <svg
-                  className="button-icon"
-                  role="presentation"
-                  aria-hidden="true"
-                >
-                  <use href="/icons.svg#x-icon"></use>
-                </svg>
-                X.com
-              </a>
-            </li>
-            <li>
-              <a href="https://bsky.app/profile/vite.dev" target="_blank">
-                <svg
-                  className="button-icon"
-                  role="presentation"
-                  aria-hidden="true"
-                >
-                  <use href="/icons.svg#bluesky-icon"></use>
-                </svg>
-                Bluesky
-              </a>
-            </li>
-          </ul>
-        </div>
-      </section>
-
-      <div className="ticks"></div>
-      <section id="spacer"></section>
-    </>
-  )
+        {initialLoading ? (
+         <p style={styles.center}>Loading...</p>
+        ) : commands.length === 0 ? (
+          <p style={styles.center}>No commands found.</p>
+        ) : (
+          <CommandList commands={commands} onToggle={handleToggle} />
+        )}
+      </div>
+    </div>
+  );
 }
 
-export default App
+const styles = {
+  page: {
+    backgroundColor: "#f9fafb",
+    minHeight: "100vh",
+    padding: "40px 20px"
+  },
+  container: {
+    maxWidth: "700px",
+    margin: "0 auto",
+    background: "white",
+    padding: "30px",
+    borderRadius: "12px",
+    boxShadow: "0 4px 12px rgba(0,0,0,0.05)"
+  },
+  title: {
+    marginBottom: "20px"
+  },
+  addButton: {
+    marginBottom: "20px",
+    padding: "10px 14px",
+    borderRadius: "8px",
+    border: "none",
+    background: "#111",
+    color: "white",
+    cursor: "pointer"
+  },
+  center: {
+    textAlign: "center"
+  },
+  searching: {
+    fontSize: "14px",
+    color: "#666",
+    marginBottom: "10px"
+  }
+};
+
+export default App;
+

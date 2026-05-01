@@ -1,60 +1,48 @@
 const mongoose = require("mongoose");
+const slugify = require("slugify");
 
-const commandSchema = new mongoose.Schema(
-  {
-    name: {
-      type: String,
-      required: true,
-      trim: true,
-      unique: true,
-    },
-    description: {
-      type: String,
-      required: true,
-    },
-    category: {
-      type: String,
-      required: true,
-      lowercase: true,
-    },
-    tags: {
-      type: [String],
-      default: [],
-    },
-    example: {
-      type: String,
-    },
-    difficulty: {
-      type: String,
-      enum: ["beginner", "intermediate", "advanced"],
-      default: "beginner",
-    },
-    explanation: {
-      type: String,
-    },
-    slug: {
-      type: String,
-      lowercase: true,
-      unique: true,
-    },
-
-  },
-  { timestamps: true }
-);
-
-// Text index for search capability
-commandSchema.index({
-  name: "text",
-  description: "text",
-  tags: "text",
+const variantSchema = new mongoose.Schema({
+  command: String,
+  description: String,
+  example: String,
+  difficulty: String
 });
 
-commandSchema.pre("save", function (next) {
-  this.slug = this.name
-  .toLowerCase()
-  .replace(/\s+/g, "-");
-  
-  next();
+const commandSchema = new mongoose.Schema({
+  name: String,
+
+  slug: {
+    type: String,
+    unique: true,
+    required: true
+  },
+
+  description: String,
+
+  category: String,
+
+  tags: {
+    primary: [String],
+    secondary: [String],
+    context: [String],
+    intent: [String],
+    tools: [String]
+  },
+
+  example: String,
+
+  difficulty: String,
+
+  variants: [variantSchema]
+});
+
+commandSchema.pre("validate", function () {
+  if (!this.slug && this.name) {
+    this.slug = slugify(this.name, {
+      lower: true,
+      strict: true
+    });
+  }
 });
 
 module.exports = mongoose.model("Command", commandSchema);

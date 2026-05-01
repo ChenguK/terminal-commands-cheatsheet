@@ -1,435 +1,558 @@
-[
-  {
-    "name": "ls",
-    "description": "List directory contents",
-    "category": "linux",
-    "tags": ["filesystem", "navigation"],
-    "example": "ls -la",
-    "difficulty": "beginner"
+{
+  "$schema": "https://example.dev/schemas/dev-command-taxonomy-v2.json",
+  "version": "2.0.0",
+  "designGoals": {
+    "searchable": true,
+    "machineReadable": true,
+    "uiOptimized": true,
+    "variantExpandable": true,
+    "tagNormalized": true
   },
-  {
-    "name": "cd",
-    "description": "Change directory",
-    "category": "linux",
-    "tags": ["navigation"],
-    "example": "cd /home/user",
-    "difficulty": "beginner"
+  "taxonomy": {
+    "domains": [
+      "linux",
+      "git",
+      "node",
+      "docker",
+      "shell",
+      "package-manager",
+      "containers",
+      "filesystem",
+      "search",
+      "text-processing"
+    ],
+    "difficultyLevels": [
+      "beginner",
+      "intermediate",
+      "advanced"
+    ],
+    "platforms": [
+      "linux",
+      "macos",
+      "windows",
+      "cross-platform"
+    ]
   },
-   {
-    "name": "pwd",
-    "description": "Print working directory",
-    "category": "linux",
-    "tags": ["filesystem"],
-    "example": "pwd",
-    "difficulty": "beginner"
-  },
-  {
-    "name": "mkdir",
-    "description": "Create a new directory",
-    "category": "linux",
-    "tags": ["filesystem"],
-    "example": "mkdir new_folder",
-    "difficulty": "beginner"
-  },
-  {
-    "name": "rm",
-    "description": "Remove files or directories",
-    "category": "linux",
-    "tags": ["filesystem"],
-    "example": "rm -rf folder",
-    "difficulty": "intermediate"
-  },
-  {
-    "name": "cp",
-    "description": "Copy files",
-    "category": "linux",
-    "tags": ["filesystem"],
-    "example": "cp file.txt backup.txt",
-    "difficulty": "beginner"
-  },
-  {
-    "name": "mv",
-    "description": "Move or rename files",
-    "category": "linux",
-    "tags": ["filesystem"],
-    "example": "mv file.txt newfile.txt",
-    "difficulty": "beginner"
-  },
-  {
-    "name": "git clone",
-    "description": "Clone a repository",
-    "category": "git",
-    "tags": ["version-control"],
-    "example": "git clone https://github.com/user/repo.git",
-    "difficulty": "beginner"
-  },
-  {
-    "name": "git status",
-    "description": "Show repo status",
-    "category": "git",
-    "tags": ["version-control"],
-    "example": "git status",
-    "difficulty": "beginner"
-  },
-  {
-    "name": "git commit",
-    "description": "Commit changes",
-    "category": "git",
-    "tags": ["version-control"],
-    "example": "git commit -m 'message'",
-    "difficulty": "beginner"
-  },
-  {
-    "name": "git push",
-    "description": "Push changes",
-    "category": "git",
-    "tags": ["version-control"],
-    "example": "git push origin main",
-    "difficulty": "intermediate"
-  },
-  {
-    "name": "grep",
-    "description": "Search text using patterns",
-    "category": "linux",
-    "tags": ["search", "text"],
-    "example": "grep 'error' log.txt",
-    "difficulty": "intermediate"
-  },
-  {
-    "name": "find",
-    "description": "Search for files",
-    "category": "linux",
-    "tags": ["search", "filesystem"],
-    "example": "find . -name '*.js'",
-    "difficulty": "intermediate"
-  },
-  {
-    "name": "chmod",
-    "description": "Change file permissions",
-    "category": "linux",
-    "tags": ["permissions"],
-    "example": "chmod 755 script.sh",
-    "difficulty": "intermediate"
-  },
-  {
-    "name": "chown",
-    "description": "Change file owner and group",
-    "category": "linux",
-    "tags": ["permissions"],
-    "example": "chown user:group file.txt",
-    "difficulty": "intermediate"
-},
-  {
-    "name": "curl",
-    "description": "Transfer data from a server",
-    "category": "network",
-    "tags": ["http", "api"],
-    "example": "curl https://example.com",
-    "difficulty": "intermediate"
-  },
-  {
-    "name": "npm install",
-    "description": "Install dependencies",
-    "category": "node",
-    "tags": ["package-manager"],
-    "example": "npm install express",
-    "difficulty": "beginner"
-  },
-  {
-    "name": "docker build",
-    "description": "Build Docker image",
-    "category": "docker",
-    "tags": ["containers"],
-    "example": "docker build -t app .",
-    "difficulty": "intermediate"
-  },
-  {
-    "name": "docker run",
-    "description": "Run Docker container",
-    "category": "docker",
-    "tags": ["containers"],
-    "example": "docker run -p 80:80 app",
-    "difficulty": "intermediate"
-  },
-{
-    "name": "ps",
-    "description": "List running processes",
-    "category": "linux",
-    "tags": ["processes"],
-    "example": "ps aux",
-    "difficulty": "beginner"
-},
-{
-    "name": "top",
-    "description": "Display system tasks",
-    "category": "linux",
-    "tags": ["processes", "monitoring"],
-    "example": "top",
-    "difficulty": "intermediate"
-},
-{
-    "name": "htop",
-    "description": "Interactive process viewer",
-    "category": "linux",
-    "tags": ["processes", "monitoring"],
-    "example": "htop",
-    "difficulty": "intermediate"
-},
-{
-    "name": "kill",
-    "description": "Terminate processes",
-    "category": "linux",
-    "tags": ["processes"],
-    "example": "kill -9 1234",
-    "difficulty": "intermediate"
-},
-{
-    "name": "netstat",
-    "description": "Network connections and statistics",
-    "category": "network",          
-    "tags": ["network"],
-    "example": "netstat -tuln",
-    "difficulty": "intermediate"
-},
-{
-    "name": "ping",
-    "description": "Test network connectivity",
-    "category": "network",
-    "tags": ["network"],
-    "example": "ping google.com",
-    "difficulty": "beginner"
-},
-{
-    "name": "traceroute",
-    "description": "Trace network path",
-    "category": "network",
-    "tags": ["network"],
-    "example": "traceroute google.com",
-    "difficulty": "intermediate"
-},
-{
-    "name": "ifconfig",
-    "description": "Configure network interfaces",
-    "category": "network",
-    "tags": ["network"],
-    "example": "ifconfig eth0",
-    "difficulty": "intermediate"
-},
-{
-    "name": "ip",
-    "description": "Show/manipulate routing, devices, policy routing",
-    "category": "network",                  
-    "tags": ["network"],
-    "example": "ip addr show",
-    "difficulty": "intermediate"
-},
-{
-    "name": "systemctl",
-    "description": "Control the systemd system and service manager",
-    "category": "linux",
-    "tags": ["services"],
-    "example": "systemctl status nginx",
-    "difficulty": "intermediate"
-},
-{
-    "name": "journalctl",
-    "description": "Query the systemd journal",
-    "category": "linux",
-    "tags": ["logs"],
-    "example": "journalctl -u nginx",
-    "difficulty": "intermediate"
-},
-{
-    "name": "df",
-    "description": "Report file system disk space usage",
-    "category": "linux",
-    "tags": ["filesystem"],
-    "example": "df -h",
-    "difficulty": "beginner"
-},
-{
-    "name": "du",
-    "description": "Estimate file space usage",
-    "category": "linux",
-    "tags": ["filesystem"],
-    "example": "du -sh *",
-    "difficulty": "intermediate"
-},
-{
-    "name": "free",
-    "description": "Display memory usage",
-    "category": "linux",
-    "tags": ["memory"],
-    "example": "free -h",
-    "difficulty": "beginner"
-},
-{
-    "name": "uptime",
-    "description": "Show how long the system has been running",
-    "category": "linux",
-    "tags": ["system"],
-    "example": "uptime",
-    "difficulty": "beginner"
-},
-{
-    "name": "whoami",
-    "description": "Display the current user",
-    "category": "linux",
-    "tags": ["user"],
-    "example": "whoami",
-    "difficulty": "beginner"
-},
-{
-    "name": "id",
-    "description": "Display user ID and group ID",
-    "category": "linux",
-    "tags": ["user"],
-    "example": "id",
-    "difficulty": "beginner"
-},
-{
-    "name": "sudo",
-    "description": "Execute a command as another user",
-    "category": "linux",
-    "tags": ["permissions"],
-    "example": "sudo apt update",
-    "difficulty": "intermediate"
-},
-{
-    "name": "su",
-    "description": "Switch user",
-    "category": "linux",
-    "tags": ["user"],
-    "example": "su - username",
-    "difficulty": "intermediate"
-},
-{
-    "name": "alias",
-    "description": "Create an alias for a command",
-    "category": "linux",
-    "tags": ["shell"],
-    "example": "alias ll='ls -la'",
-    "difficulty": "intermediate"
-},
-{
-    "name": "env",
-    "description": "Display environment variables",
-    "category": "linux",
-    "tags": ["environment"],
-    "example": "env",
-    "difficulty": "beginner"
-},
-{
-    "name": "export",
-    "description": "Set environment variables",
-    "category": "linux",
-    "tags": ["environment"],
-    "example": "export PATH=$PATH:/new/path",
-    "difficulty": "intermediate"
-},
-{
-    "name": "source",
-    "description": "Execute commands from a file in the current shell",
-    "category": "linux",
-    "tags": ["shell"],
-    "example": "source ~/.bashrc",
-    "difficulty": "intermediate"
-},
-{
-    "name": "history",
-    "description": "Show command history",
-    "category": "linux",
-    "tags": ["shell"],
-    "example": "history",
-    "difficulty": "beginner"
-},
-{
-    "name": "clear",
-    "description": "Clear the terminal screen",
-    "category": "linux",
-    "tags": ["shell"],
-    "example": "clear",
-    "difficulty": "beginner"
-},      
-{
-    "name": "man",
-    "description": "Display the manual for a command",
-"category": "linux",
-    "tags": ["help"],
-    "example": "man ls",
-    "difficulty": "beginner"
-},
-{
-    "name": "help",
-    "description": "Display help information for a command",
-    "category": "linux",
-    "tags": ["help"],
-    "example": "ls --help",
-    "difficulty": "beginner"
-},
-{
-    "name": "date",
-    "description": "Display or set the system date and time",
-    "category": "linux",
-    "tags": ["system"],
-    "example": "date",
-    "difficulty": "beginner"
-},
-{
-    "name": "cal",
-    "description": "Display a calendar",
-    "category": "linux",
-    "tags": ["system"],
-    "example": "cal",
-    "difficulty": "beginner"
-},
-{
-    "name": "who",
-    "description": "Show who is logged in",
-    "category": "linux",
-    "tags": ["user"],
-    "example": "who",
-    "difficulty": "beginner"
-},
-{
-    "name": "w",
-    "description": "Show who is logged in and what they are doing",
-    "category": "linux",
-    "tags": ["user"],
-    "example": "w",
-    "difficulty": "intermediate"
-},
-{
-    "name": "last",
-    "description": "Show last logins",
-    "category": "linux",
-    "tags": ["user"],
-    "example": "last",
-    "difficulty": "intermediate"
-},
-{
-    "name": "hostname",
-    "description": "Show or set the system's hostname",
-    "category": "linux",
-    "tags": ["system"],
-    "example": "hostname",
-    "difficulty": "beginner"
-},
-{
-    "name": "uname",
-    "description": "Show system information",
-    "category": "linux",
-    "tags": ["system"],
-    "example": "uname -a",
-    "difficulty": "beginner"
-},
-{
-    "name": "lsb_release",
-    "description": "Show Linux distribution information",
-    "category": "linux",
-    "tags": ["system"],
-    "example": "lsb_release -a",
-    "difficulty": "intermediate"
-}
+  "commands": [
+    {
+      "id": "linux.ls",
+      "name": "ls",
+      "slug": "ls",
+      "summary": "List directory contents and file metadata.",
+      "domain": "linux",
+      "subcategory": "filesystem",
+      "platforms": ["linux", "macos"],
+      "difficulty": "beginner",
+      "searchTokens": [
+        "list files",
+        "directory listing",
+        "show files",
+        "filesystem",
+        "folders",
+        "hidden files"
+      ],
+      "tags": {
+        "primary": ["filesystem", "navigation"],
+        "secondary": ["listing", "directories", "shell"]
+      },
+      "intent": [
+        "inspect-directory",
+        "view-hidden-files",
+        "sort-files"
+      ],
+      "relatedCommands": ["cd", "find", "tree"],
+      "commonFlags": ["-l", "-a", "-h", "-R", "-t", "-S"],
+      "examples": [
+        "ls",
+        "ls -la",
+        "ls -lh"
+      ],
+      "ui": {
+        "cardStyle": "expandable",
+        "showVariantCount": true,
+        "defaultExpanded": false
+      },
+      "variants": [
+        {
+          "id": "linux.ls.basic",
+          "command": "ls",
+          "title": "Basic Listing",
+          "description": "List files and directories in the current directory.",
+          "example": "ls",
+          "difficulty": "beginner",
+          "searchTokens": ["list files", "directory contents"],
+          "tags": ["basic", "filesystem"],
+          "useCases": ["inspect current folder"]
+        },
+        {
+          "id": "linux.ls.long",
+          "command": "ls -l",
+          "title": "Long Format",
+          "description": "Display permissions, owner, size, and timestamps.",
+          "example": "ls -l",
+          "difficulty": "beginner",
+          "searchTokens": ["permissions", "file details"],
+          "tags": ["metadata", "permissions"]
+        },
+        {
+          "id": "linux.ls.all",
+          "command": "ls -la",
+          "title": "All Files",
+          "description": "Include hidden files in long format output.",
+          "example": "ls -la",
+          "difficulty": "beginner",
+          "searchTokens": ["hidden files", "dotfiles"],
+          "tags": ["hidden-files", "dotfiles"]
+        },
+        {
+          "id": "linux.ls.human",
+          "command": "ls -lh",
+          "title": "Human Readable Sizes",
+          "description": "Show file sizes using KB, MB, and GB notation.",
+          "example": "ls -lh",
+          "difficulty": "beginner",
+          "searchTokens": ["human readable sizes"],
+          "tags": ["sizes"]
+        },
+        {
+          "id": "linux.ls.recursive",
+          "command": "ls -R",
+          "title": "Recursive Listing",
+          "description": "Recursively list nested directories.",
+          "example": "ls -R",
+          "difficulty": "intermediate",
+          "searchTokens": ["recursive files", "nested folders"],
+          "tags": ["recursive"]
+        }
+      ]
+    },
 
-]
+    {
+      "id": "linux.cd",
+      "name": "cd",
+      "slug": "cd",
+      "summary": "Change the current working directory.",
+      "domain": "linux",
+      "subcategory": "filesystem",
+      "platforms": ["linux", "macos"],
+      "difficulty": "beginner",
+      "searchTokens": [
+        "change directory",
+        "navigate folders",
+        "move directory"
+      ],
+      "tags": {
+        "primary": ["filesystem", "navigation"],
+        "secondary": ["paths", "shell"]
+      },
+      "intent": [
+        "navigate-directories",
+        "move-relative",
+        "move-absolute"
+      ],
+      "relatedCommands": ["pwd", "ls"],
+      "examples": [
+        "cd /var/log",
+        "cd ..",
+        "cd ~"
+      ],
+      "variants": [
+        {
+          "id": "linux.cd.home",
+          "command": "cd",
+          "title": "Home Directory",
+          "description": "Navigate to the user's home directory.",
+          "example": "cd",
+          "difficulty": "beginner",
+          "tags": ["home", "navigation"]
+        },
+        {
+          "id": "linux.cd.parent",
+          "command": "cd ..",
+          "title": "Parent Directory",
+          "description": "Move up one directory level.",
+          "example": "cd ..",
+          "difficulty": "beginner",
+          "tags": ["relative-paths"]
+        },
+        {
+          "id": "linux.cd.previous",
+          "command": "cd -",
+          "title": "Previous Directory",
+          "description": "Switch back to the previous directory.",
+          "example": "cd -",
+          "difficulty": "intermediate",
+          "tags": ["history", "navigation"]
+        }
+      ]
+    },
+
+    {
+      "id": "git.core",
+      "name": "git",
+      "slug": "git",
+      "summary": "Distributed version control system for source code management.",
+      "domain": "git",
+      "subcategory": "version-control",
+      "platforms": ["cross-platform"],
+      "difficulty": "beginner",
+      "searchTokens": [
+        "source control",
+        "version control",
+        "repository management",
+        "branches"
+      ],
+      "tags": {
+        "primary": ["version-control"],
+        "secondary": ["repositories", "collaboration"]
+      },
+      "intent": [
+        "track-changes",
+        "manage-branches",
+        "sync-repository"
+      ],
+      "relatedCommands": ["gh", "git-lfs"],
+      "examples": [
+        "git status",
+        "git commit -m 'message'",
+        "git push origin main"
+      ],
+      "variants": [
+        {
+          "id": "git.clone",
+          "command": "git clone",
+          "title": "Clone Repository",
+          "description": "Download a remote repository locally.",
+          "example": "git clone https://github.com/user/repo.git",
+          "difficulty": "beginner",
+          "tags": ["repositories", "remote"]
+        },
+        {
+          "id": "git.status",
+          "command": "git status",
+          "title": "Repository Status",
+          "description": "Show tracked, modified, and untracked files.",
+          "example": "git status",
+          "difficulty": "beginner",
+          "tags": ["inspection"]
+        },
+        {
+          "id": "git.commit",
+          "command": "git commit -m",
+          "title": "Create Commit",
+          "description": "Commit staged changes with a message.",
+          "example": "git commit -m 'Initial commit'",
+          "difficulty": "beginner",
+          "tags": ["commits"]
+        },
+        {
+          "id": "git.checkout.branch",
+          "command": "git checkout -b",
+          "title": "Create Branch",
+          "description": "Create and switch to a new branch.",
+          "example": "git checkout -b feature/auth",
+          "difficulty": "intermediate",
+          "tags": ["branches"]
+        }
+      ]
+    },
+
+    {
+      "id": "node.npm",
+      "name": "npm",
+      "slug": "npm",
+      "summary": "Package manager for Node.js projects.",
+      "domain": "node",
+      "subcategory": "package-manager",
+      "platforms": ["cross-platform"],
+      "difficulty": "beginner",
+      "searchTokens": [
+        "node packages",
+        "install dependencies",
+        "javascript tooling"
+      ],
+      "tags": {
+        "primary": ["package-manager"],
+        "secondary": ["dependencies", "scripts"]
+      },
+      "intent": [
+        "install-packages",
+        "run-scripts",
+        "manage-dependencies"
+      ],
+      "relatedCommands": ["npx", "pnpm", "yarn"],
+      "examples": [
+        "npm install",
+        "npm run dev",
+        "npm test"
+      ],
+      "variants": [
+        {
+          "id": "node.npm.install",
+          "command": "npm install",
+          "title": "Install Dependencies",
+          "description": "Install dependencies from package.json.",
+          "example": "npm install",
+          "difficulty": "beginner",
+          "tags": ["dependencies"]
+        },
+        {
+          "id": "node.npm.install.package",
+          "command": "npm install package-name",
+          "title": "Install Package",
+          "description": "Install a specific package locally.",
+          "example": "npm install express",
+          "difficulty": "beginner",
+          "tags": ["dependencies", "local-install"]
+        },
+        {
+          "id": "node.npm.run.dev",
+          "command": "npm run dev",
+          "title": "Run Development Server",
+          "description": "Execute the development script from package.json.",
+          "example": "npm run dev",
+          "difficulty": "intermediate",
+          "tags": ["scripts", "development"]
+        },
+        {
+          "id": "node.npm.test",
+          "command": "npm test",
+          "title": "Run Tests",
+          "description": "Execute project test scripts.",
+          "example": "npm test",
+          "difficulty": "beginner",
+          "tags": ["testing"]
+        }
+      ]
+    },
+
+    {
+      "id": "node.npx",
+      "name": "npx",
+      "slug": "npx",
+      "summary": "Execute Node.js packages without globally installing them.",
+      "domain": "node",
+      "subcategory": "package-execution",
+      "platforms": ["cross-platform"],
+      "difficulty": "beginner",
+      "searchTokens": [
+        "run package",
+        "temporary cli",
+        "execute node tools"
+      ],
+      "tags": {
+        "primary": ["package-execution"],
+        "secondary": ["cli-tools", "scaffolding"]
+      },
+      "intent": [
+        "run-cli",
+        "scaffold-project",
+        "execute-package"
+      ],
+      "relatedCommands": ["npm", "pnpm dlx", "yarn dlx"],
+      "examples": [
+        "npx create-next-app",
+        "npx prisma studio",
+        "npx eslint ."
+      ],
+      "variants": [
+        {
+          "id": "node.npx.create-next-app",
+          "command": "npx create-next-app@latest",
+          "title": "Create Next.js App",
+          "description": "Scaffold a new Next.js application.",
+          "example": "npx create-next-app@latest my-app",
+          "difficulty": "beginner",
+          "tags": ["scaffolding", "nextjs"]
+        },
+        {
+          "id": "node.npx.prisma.studio",
+          "command": "npx prisma studio",
+          "title": "Open Prisma Studio",
+          "description": "Launch Prisma's database GUI.",
+          "example": "npx prisma studio",
+          "difficulty": "intermediate",
+          "tags": ["database", "orm"]
+        },
+        {
+          "id": "node.npx.eslint",
+          "command": "npx eslint .",
+          "title": "Run ESLint",
+          "description": "Lint project files without a global install.",
+          "example": "npx eslint src",
+          "difficulty": "intermediate",
+          "tags": ["linting", "quality"]
+        }
+      ]
+    },
+
+    {
+      "id": "containers.docker",
+      "name": "docker",
+      "slug": "docker",
+      "summary": "Container platform for packaging and running applications.",
+      "domain": "docker",
+      "subcategory": "containers",
+      "platforms": ["linux", "macos", "windows"],
+      "difficulty": "intermediate",
+      "searchTokens": [
+        "containers",
+        "docker images",
+        "run container",
+        "container logs"
+      ],
+      "tags": {
+        "primary": ["containers"],
+        "secondary": ["images", "deployment"]
+      },
+      "intent": [
+        "build-image",
+        "run-container",
+        "inspect-container"
+      ],
+      "relatedCommands": ["docker-compose", "kubectl"],
+      "examples": [
+        "docker build -t app .",
+        "docker run -p 3000:3000 app"
+      ],
+      "variants": [
+        {
+          "id": "docker.build",
+          "command": "docker build",
+          "title": "Build Image",
+          "description": "Build a Docker image from a Dockerfile.",
+          "example": "docker build -t my-app .",
+          "difficulty": "intermediate",
+          "tags": ["images", "build"]
+        },
+        {
+          "id": "docker.run",
+          "command": "docker run",
+          "title": "Run Container",
+          "description": "Start a container from an image.",
+          "example": "docker run -p 8080:80 nginx",
+          "difficulty": "intermediate",
+          "tags": ["runtime"]
+        },
+        {
+          "id": "docker.logs",
+          "command": "docker logs",
+          "title": "Container Logs",
+          "description": "View logs from a running container.",
+          "example": "docker logs container-id",
+          "difficulty": "intermediate",
+          "tags": ["debugging", "logs"]
+        }
+      ]
+    },
+
+    {
+      "id": "linux.grep",
+      "name": "grep",
+      "slug": "grep",
+      "summary": "Search text using patterns and regular expressions.",
+      "domain": "linux",
+      "subcategory": "text-processing",
+      "platforms": ["linux", "macos"],
+      "difficulty": "intermediate",
+      "searchTokens": [
+        "search text",
+        "regex",
+        "find string",
+        "log search"
+      ],
+      "tags": {
+        "primary": ["search", "text-processing"],
+        "secondary": ["regex", "logs"]
+      },
+      "intent": [
+        "search-files",
+        "filter-output",
+        "analyze-logs"
+      ],
+      "relatedCommands": ["awk", "sed", "find"],
+      "examples": [
+        "grep 'error' app.log",
+        "grep -r TODO ."
+      ],
+      "variants": [
+        {
+          "id": "linux.grep.basic",
+          "command": "grep pattern file.txt",
+          "title": "Basic Search",
+          "description": "Search for a text pattern inside a file.",
+          "example": "grep 'error' log.txt",
+          "difficulty": "intermediate",
+          "tags": ["search"]
+        },
+        {
+          "id": "linux.grep.recursive",
+          "command": "grep -r",
+          "title": "Recursive Search",
+          "description": "Search recursively through directories.",
+          "example": "grep -r 'TODO' .",
+          "difficulty": "intermediate",
+          "tags": ["recursive", "code-search"]
+        },
+        {
+          "id": "linux.grep.invert",
+          "command": "grep -v",
+          "title": "Invert Match",
+          "description": "Show lines that do not match the pattern.",
+          "example": "grep -v 'debug' app.log",
+          "difficulty": "advanced",
+          "tags": ["inverse-filtering"]
+        }
+      ]
+    },
+
+    {
+      "id": "shell.find",
+      "name": "find",
+      "slug": "find",
+      "summary": "Search for files and directories by name, type, or conditions.",
+      "domain": "linux",
+      "subcategory": "filesystem-search",
+      "platforms": ["linux", "macos"],
+      "difficulty": "intermediate",
+      "searchTokens": [
+        "find files",
+        "search directories",
+        "locate files"
+      ],
+      "tags": {
+        "primary": ["filesystem", "search"],
+        "secondary": ["automation", "paths"]
+      },
+      "intent": [
+        "locate-files",
+        "filter-by-type",
+        "bulk-operations"
+      ],
+      "examples": [
+        "find . -name '*.js'",
+        "find . -type d"
+      ],
+      "variants": [
+        {
+          "id": "find.by-name",
+          "command": "find . -name",
+          "title": "Find by Name",
+          "description": "Search for files matching a name pattern.",
+          "example": "find . -name '*.ts'",
+          "difficulty": "intermediate",
+          "tags": ["patterns"]
+        },
+        {
+          "id": "find.by-type",
+          "command": "find . -type",
+          "title": "Find by Type",
+          "description": "Filter by file or directory type.",
+          "example": "find . -type d",
+          "difficulty": "intermediate",
+          "tags": ["directories", "files"]
+        }
+      ]
+    }
+  ]
+}

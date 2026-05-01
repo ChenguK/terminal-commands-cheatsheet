@@ -1,22 +1,30 @@
 require("dotenv").config();
 const mongoose = require("mongoose");
+const slugify = require("slugify");
 const Command = require("../models/Command");
-const commands = require("./commands.json");
+const commandData = require("../data/commands.json");
+const commands = commandData.commands;
 
 
 const seedDB = async () => {
   try {
     await mongoose.connect(process.env.MONGO_URI);
-
     console.log("MongoDB connected");
 
-    // safer: only wipe in dev
     if (process.env.NODE_ENV !== "production") {
-      await Command.deleteMany();
+      await Command.deleteMany({});
       console.log("Old data cleared");
     }
 
-    await Command.insertMany(commands);
+    const commandsWithSlugs = commands.map(cmd => ({
+      ...cmd,
+      slug: slugify(cmd.name, { 
+        lower: true, 
+        strict: true 
+      })
+    }));
+
+    await Command.insertMany(commandsWithSlugs);
 
     console.log("✅ Database seeded!");
     process.exit();
