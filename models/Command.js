@@ -9,7 +9,10 @@ const variantSchema = new mongoose.Schema({
 });
 
 const commandSchema = new mongoose.Schema({
-  name: String,
+  name: { 
+    type: String, 
+    required: true 
+  },
 
   slug: {
     type: String,
@@ -17,9 +20,14 @@ const commandSchema = new mongoose.Schema({
     required: true
   },
 
-  description: String,
+  description: { 
+    type: String, 
+    required: true 
+  },
 
-  category: String,
+  category: { 
+    type: String, 
+    required: true },
 
   tags: {
     primary: [String],
@@ -31,7 +39,11 @@ const commandSchema = new mongoose.Schema({
 
   example: String,
 
-  difficulty: String,
+  difficulty: { 
+    type: String, 
+    required: true,
+    enum: ["beginner", "intermediate", "advanced"],
+  },
 
   variants: [variantSchema]
 });

@@ -29,7 +29,7 @@ function App() {
     setCommands(data.results || []);
   } catch (err) {
     if (err.name === "AbortError") {
-      console.error("Error", err);
+      console.error(err);
     }
   } finally {
     setInitialLoading(false);
@@ -44,7 +44,7 @@ function App() {
   const handleToggle = async (name) => {
     // optimistic UI update
     setCommands((prev) =>
-      prev.map((cmd) =>
+      (prev || []).map((cmd) =>
         cmd.name === name
           ? { ...cmd, favorite: !cmd.favorite }
           : cmd

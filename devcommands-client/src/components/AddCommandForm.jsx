@@ -24,7 +24,7 @@ function AddCommandForm({ onAdd }) {
       }
     />
   </div>
-
+ 
   <div>
     <input
       placeholder="Description"
@@ -34,6 +34,17 @@ function AddCommandForm({ onAdd }) {
       }
     />
   </div>
+   <div>
+    <input
+      placeholder="Tags (comma-separated)"
+      value={form.tags}
+      onChange={(e) =>
+        setForm({ ...form, tags: e.target.value })
+      }
+    />
+  </div>
+
+
 
   <div>
     <select

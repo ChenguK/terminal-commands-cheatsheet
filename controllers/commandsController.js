@@ -26,33 +26,37 @@ exports.getCommands = async (req, res, next) => {
 
       const allCommands = await Command.find();
 
-      const scored = allCommands.map((cmd) => {
-        const words = [
-          ...cmd.name.toLowerCase().split(" "),
-          ...cmd.description.toLowerCase().split(" "),
-        ];
+      const scored = (allCommands || []).map((cmd) => {
+      const name = (cmd.name || "").toLowerCase();
+      const description = (cmd.description || "").toLowerCase();
 
-        let score = 0;
+      const words = [
+        ...name.split(" "),
+        ...description.split(" "),
+      ];
 
-        words.forEach((word) => {
-          const similarity = stringSimilarity.compareTwoStrings(search, word);
+  let score = 0;
 
-          if (similarity > score) score = similarity;
+  words.forEach((word) => {
+    const similarity = stringSimilarity.compareTwoStrings(search, word);
 
-          if (isCloseMatch(search, word)) {
-            score = Math.max(score, 0.6);
-          }
-        });
+    if (similarity > score) score = similarity;
 
-        if (cmd.name.toLowerCase().includes(search)) score += 0.5;
+    if (isCloseMatch(search, word)) {
+      score = Math.max(score, 0.6);
+    }
+  });
 
-        return {
-          ...cmd.toObject(),
-          score,
-        };
-      });
+  if (name.includes(search)) score += 0.5;
 
-      const filtered = scored
+  return {
+    ...cmd.toObject(),
+    score,
+  };
+});
+
+
+      const filtered = (scored || [])
         .filter((c) => c.score > 0.3)
         .sort((a, b) => b.score - a.score)
         .map(({ score, ...rest }) => rest);
@@ -62,10 +66,10 @@ exports.getCommands = async (req, res, next) => {
         const favorites = await Favorite.find({ userId }).select("commandId");
 
         const favoriteIds = new Set(
-        favorites.map(f => f.commandId.toString())
+        (favorites || []).map(f => f.commandId.toString())
         );
 
-        const resultsWithFavorites = filtered.map(cmd => ({
+        const resultsWithFavorites = (filtered || []).map(cmd => ({
         ...cmd,
         favorite: favoriteIds.has(cmd._id.toString())
         }));
@@ -99,10 +103,10 @@ exports.getCommands = async (req, res, next) => {
     const favorites = await Favorite.find({ userId }).select("commandId");
 
     const favoriteIds = new Set(
-    favorites.map(f => f.commandId.toString())
+    (favorites || []).map(f => f.commandId.toString())
     );
 
-    const resultsWithFavorites = commands.map(cmd => ({
+    const resultsWithFavorites = (commands || []).map(cmd => ({
     ...cmd.toObject(),
     favorite: favoriteIds.has(cmd._id.toString())
 }));
