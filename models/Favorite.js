@@ -16,6 +16,6 @@ const favoriteSchema = new mongoose.Schema({
 }, { timestamps: true });
 
 // prevent duplicates
-favoriteSchema.index({ userId: 1, commandName: 1 }, { unique: true });
+favoriteSchema.index({ userId: 1, commandId: 1 }, { unique: true });
 
 module.exports = mongoose.model("Favorite", favoriteSchema);

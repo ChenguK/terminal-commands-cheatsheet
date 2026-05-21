@@ -5,19 +5,18 @@ function SearchBar({ onSearch }) {
   const timeoutRef = useRef(null);
 
   // Debounce search input
-  
-  
   useEffect(() => {
-  const timeout = setTimeout(() => {
+  timeoutRef.current = setTimeout(() => {
     onSearch(value);
   }, 300);
 
-  return () => clearTimeout(timeout);
+  return () => clearTimeout(timeoutRef.current);
 }, [value]);
 
   //Instant search on Enter
   const handleKeyDown = (e) => {
     if (e.key === "Enter") {
+      e.preventDefault();
       clearTimeout(timeoutRef.current);
       onSearch(value);
     }
@@ -31,6 +30,7 @@ function SearchBar({ onSearch }) {
         onKeyDown={handleKeyDown}
         placeholder="Search commands..."
         style={styles.input}
+        aria-label="Search development commands"
       /> 
     </div>
   );

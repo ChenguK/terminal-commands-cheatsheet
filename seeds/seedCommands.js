@@ -3,7 +3,10 @@ const mongoose = require("mongoose");
 const slugify = require("slugify");
 const Command = require("../models/Command");
 const commandData = require("../data/commands.json");
-const commands = commandData.commands;
+
+const commands = Array.isArray(commandData)
+  ? commandData
+  : commandData.commands || [];
 
 
 const seedDB = async () => {
@@ -23,6 +26,9 @@ const seedDB = async () => {
         strict: true 
       })
     }));
+
+    console.log(commands.length, "commands to insert");
+    console.log(commands[0]);
 
     await Command.insertMany(commandsWithSlugs);
 

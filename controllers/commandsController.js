@@ -27,12 +27,14 @@ exports.getCommands = async (req, res, next) => {
       const allCommands = await Command.find();
 
       const scored = (allCommands || []).map((cmd) => {
+      const summary = (cmd.summary || "").toLowerCase();
+      const title = (cmd.name || "").toLowerCase();
       const name = (cmd.name || "").toLowerCase();
-      const description = (cmd.description || "").toLowerCase();
+      const description = (cmd.summary || "").toLowerCase();
 
       const words = [
         ...name.split(" "),
-        ...description.split(" "),
+        ...summary.split(" "),
       ];
 
   let score = 0;
@@ -109,7 +111,7 @@ exports.getCommands = async (req, res, next) => {
     const resultsWithFavorites = (commands || []).map(cmd => ({
     ...cmd.toObject(),
     favorite: favoriteIds.has(cmd._id.toString())
-}));
+    }));
 
 
     // count AFTER filters applied (but BEFORE pagination)

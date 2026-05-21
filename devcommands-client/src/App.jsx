@@ -1,97 +1,85 @@
 import { useEffect, useState, useCallback } from "react";
+import useCommands from "./hooks/useCommands";
 import SearchBar from "./components/SearchBar";
 import CommandList from "./components/CommandList";
 import AddCommandForm from "./components/AddCommandForm";
 import {
-  fetchCommands,
   toggleFavorite,
   createCommand
 } from "./services/api";
 
 function App() {
-  const [initialLoading, setInitialLoading] = useState(true);
-  const [searchLoading, setSearchLoading] = useState(false);
-  const [commands, setCommands] = useState([]);
+  const {
+  commands,
+  loading,
+  error,
+  retry
+    } = useCommands();
   const [showForm, setShowForm] = useState(false);
 
-  const cache = {};
-
-  const loadCommands = useCallback(async (search = "") => {
-    // first page load
-    if (commands.length === 0) {
-      setInitialLoading(true);
-    } else {
-      setSearchLoading(true);
-    }
-
-  try {
-    const data = await fetchCommands(search);
-    setCommands(data.results || []);
-  } catch (err) {
-    if (err.name === "AbortError") {
-      console.error(err);
-    }
-  } finally {
-    setInitialLoading(false);
-    setSearchLoading(false);
-  }
-  }, [commands.length]);
-
-  useEffect(() => {
-    loadCommands();
-  }, [loadCommands]);
 
   const handleToggle = async (name) => {
     // optimistic UI update
-    setCommands((prev) =>
-      (prev || []).map((cmd) =>
-        cmd.name === name
-          ? { ...cmd, favorite: !cmd.favorite }
-          : cmd
-      )
-    );
 
     try {
       await toggleFavorite(name);
+      retry(); // refresh data to sync with server
     } catch (error) {
-      // rollback if API fails
-      loadCommands();
+     console.error("Toggle error:", error);
     }
   };
 
   const handleAdd = async (command) => {
     await createCommand(command);
-    loadCommands();
+    retry();
     setShowForm(false);
   };
 
-  return (
-    <div style={styles.page}>
-      <div style={styles.container}>
-        <h1 style={styles.title}>DevCommands</h1>
 
-        <SearchBar onSearch={loadCommands} />
-        {searchLoading && (
+  return (
+
+    <div style={styles.page}
+    >
+      <div style={styles.container}>
+        <h1 style={styles.title}>Commands for Devs</h1>
+
+        {error && (
+          <div style={{ marginBottom: "20px", color: "red" }}>
+            <p>{error}</p>
+            <button onClick={retry}>Retry</button>
+          </div>
+        )}
+
+
+        <SearchBar onSearch={retry} />
+        {loading && commands.length > 0 ? (
+          
           <p style={styles.searching}>Searching...</p>
-          )}
+          
+          ) : null}
 
         <button
           style={styles.addButton}
           onClick={() => setShowForm((prev) => !prev)}
           onMouseEnter={(e) => (e.target.style.opacity = 0.8)}
           onMouseLeave={(e) => (e.target.style.opacity = 1)}
+          alt-text="Add command button"
+
         >
           ➕ Add to API
         </button>
 
         {showForm && <AddCommandForm onAdd={handleAdd} />}
 
-        {initialLoading ? (
+        {loading ? (
          <p style={styles.center}>Loading...</p>
         ) : commands.length === 0 ? (
           <p style={styles.center}>No commands found.</p>
         ) : (
-          <CommandList commands={commands} onToggle={handleToggle} />
+          <CommandList 
+            commands={commands} 
+            onToggle={handleToggle}
+            />
         )}
       </div>
     </div>
@@ -99,10 +87,11 @@ function App() {
 }
 
 const styles = {
+  
   page: {
     backgroundColor: "#f9fafb",
     minHeight: "100vh",
-    padding: "40px 20px"
+    padding: "40px 20px",
   },
   container: {
     maxWidth: "700px",

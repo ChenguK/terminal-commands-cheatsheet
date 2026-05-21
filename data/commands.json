@@ -35,524 +35,1079 @@
   },
   "commands": [
     {
-      "id": "linux.ls",
-      "name": "ls",
-      "slug": "ls",
-      "summary": "List directory contents and file metadata.",
-      "domain": "linux",
-      "subcategory": "filesystem",
-      "platforms": ["linux", "macos"],
-      "difficulty": "beginner",
-      "searchTokens": [
-        "list files",
-        "directory listing",
-        "show files",
-        "filesystem",
-        "folders",
-        "hidden files"
-      ],
-      "tags": {
-        "primary": ["filesystem", "navigation"],
-        "secondary": ["listing", "directories", "shell"]
-      },
-      "intent": [
-        "inspect-directory",
-        "view-hidden-files",
-        "sort-files"
-      ],
-      "relatedCommands": ["cd", "find", "tree"],
-      "commonFlags": ["-l", "-a", "-h", "-R", "-t", "-S"],
-      "examples": [
-        "ls",
-        "ls -la",
-        "ls -lh"
-      ],
-      "ui": {
-        "cardStyle": "expandable",
-        "showVariantCount": true,
-        "defaultExpanded": false
-      },
-      "variants": [
-        {
-          "id": "linux.ls.basic",
-          "command": "ls",
-          "title": "Basic Listing",
-          "description": "List files and directories in the current directory.",
-          "example": "ls",
-          "difficulty": "beginner",
-          "searchTokens": ["list files", "directory contents"],
-          "tags": ["basic", "filesystem"],
-          "useCases": ["inspect current folder"]
-        },
-        {
-          "id": "linux.ls.long",
-          "command": "ls -l",
-          "title": "Long Format",
-          "description": "Display permissions, owner, size, and timestamps.",
-          "example": "ls -l",
-          "difficulty": "beginner",
-          "searchTokens": ["permissions", "file details"],
-          "tags": ["metadata", "permissions"]
-        },
-        {
-          "id": "linux.ls.all",
-          "command": "ls -la",
-          "title": "All Files",
-          "description": "Include hidden files in long format output.",
-          "example": "ls -la",
-          "difficulty": "beginner",
-          "searchTokens": ["hidden files", "dotfiles"],
-          "tags": ["hidden-files", "dotfiles"]
-        },
-        {
-          "id": "linux.ls.human",
-          "command": "ls -lh",
-          "title": "Human Readable Sizes",
-          "description": "Show file sizes using KB, MB, and GB notation.",
-          "example": "ls -lh",
-          "difficulty": "beginner",
-          "searchTokens": ["human readable sizes"],
-          "tags": ["sizes"]
-        },
-        {
-          "id": "linux.ls.recursive",
-          "command": "ls -R",
-          "title": "Recursive Listing",
-          "description": "Recursively list nested directories.",
-          "example": "ls -R",
-          "difficulty": "intermediate",
-          "searchTokens": ["recursive files", "nested folders"],
-          "tags": ["recursive"]
-        }
-      ]
+    "name": "cat",
+    "slug": "cat",
+    "summary": "Concatenate and display file contents in the terminal.",
+    "category": "filesystem",
+    "tags": {
+      "primary": ["filesystem", "text processing"],
+      "secondary": ["files", "shell", "linux"],
+      "context": ["file management", "terminal navigation", "development workflow"],
+      "intent": ["view file contents", "combine files", "debug output"],
+      "tools": ["bash", "zsh", "terminal"]
     },
-
-    {
-      "id": "linux.cd",
-      "name": "cd",
-      "slug": "cd",
-      "summary": "Change the current working directory.",
-      "domain": "linux",
-      "subcategory": "filesystem",
-      "platforms": ["linux", "macos"],
-      "difficulty": "beginner",
-      "searchTokens": [
-        "change directory",
-        "navigate folders",
-        "move directory"
-      ],
-      "tags": {
-        "primary": ["filesystem", "navigation"],
-        "secondary": ["paths", "shell"]
+    "example": "cat file.txt",
+    "difficulty": "beginner",
+    "variants": [
+      {
+        "title": "Display File Contents",
+        "command": "cat file.txt",
+        "description": "Print the contents of a file to the terminal.",
+        "example": "cat file.txt",
+        "difficulty": "beginner"
       },
-      "intent": [
-        "navigate-directories",
-        "move-relative",
-        "move-absolute"
-      ],
-      "relatedCommands": ["pwd", "ls"],
-      "examples": [
-        "cd /var/log",
-        "cd ..",
-        "cd ~"
-      ],
-      "variants": [
-        {
-          "id": "linux.cd.home",
-          "command": "cd",
-          "title": "Home Directory",
-          "description": "Navigate to the user's home directory.",
-          "example": "cd",
-          "difficulty": "beginner",
-          "tags": ["home", "navigation"]
-        },
-        {
-          "id": "linux.cd.parent",
-          "command": "cd ..",
-          "title": "Parent Directory",
-          "description": "Move up one directory level.",
-          "example": "cd ..",
-          "difficulty": "beginner",
-          "tags": ["relative-paths"]
-        },
-        {
-          "id": "linux.cd.previous",
-          "command": "cd -",
-          "title": "Previous Directory",
-          "description": "Switch back to the previous directory.",
-          "example": "cd -",
-          "difficulty": "intermediate",
-          "tags": ["history", "navigation"]
-        }
-      ]
+      {
+        "title": "Concatenate Multiple Files",
+        "command": "cat file1.txt file2.txt > combined.txt",
+        "description": "Combine the contents of multiple files into a new file.",
+        "example": "cat file1.txt file2.txt > combined.txt",
+        "difficulty": "intermediate"
+      },
+      {
+        "title": "View File With Line Numbers",
+        "command": "cat -n file.txt",
+        "description": "Display file contents with line numbers for easier reference.",
+        "example": "cat -n file.txt",
+        "difficulty": "intermediate"
+      },
+      {
+        "title": "Use With Pipe to Filter Output",
+        "command": "cat file.txt | grep \"search term\"",
+        "description": "Combine cat with grep to search for specific text within a file.",
+        "example": "cat file.txt | grep \"search term\"",
+        "difficulty": "intermediate"
+      },
+      {
+        "title": "Display File Contents in Reverse",
+        "command": "tac file.txt",
+        "description": "Use tac (cat spelled backwards) to display file contents in reverse order.",
+        "example": "tac file.txt",
+        "difficulty": "intermediate"
+      },
+      {
+        "title": "Show Non-Printable Characters",
+        "command": "cat -A file.txt",
+        "description": "Display non-printable characters in a file for debugging purposes.",
+        "example": "cat -A file.txt",
+        "difficulty": "advanced"
+      },
+      {
+        "title": "Concatenate Files With Separator",
+        "command": "cat file1.txt <(echo \"---\") file2.txt > combined.txt",
+        "description": "Combine files with a separator between them using process substitution.",
+        "example": "cat file1.txt <(echo \"---\") file2.txt > combined.txt",
+        "difficulty": "advanced"
+      },
+      {
+        "title": "Display File Contents With Pagination",
+        "command": "cat file.txt | less",
+        "description": "Use cat with less to view large files one page at a time.",
+        "example": "cat file.txt | less",
+        "difficulty": "intermediate"
+      },
+      {
+        "title": "Show Only the First Few Lines of a File",
+        "command": "cat file.txt | head -n 10",
+        "description": "Use cat with head to display only the first 10 lines of a file.",
+        "example": "cat file.txt | head -n 10",
+        "difficulty": "intermediate"
+      },
+      {
+        "title": "Show Only the Last Few Lines of a File",
+        "command": "cat file.txt | tail -n 10",
+        "description": "Use cat with tail to display only the last 10 lines of a file.",
+        "example": "cat file.txt | tail -n 10",
+        "difficulty": "intermediate"
+      }
+    ]
+  },
+  {
+    "name": "cd",
+    "slug": "cd",
+    "summary": "Navigate between directories in the terminal.",
+    "category": "filesystem",
+    "tags": {
+      "primary": ["navigation", "filesystem"],
+      "secondary": ["directories", "shell", "terminal basics"],
+      "context": ["terminal navigation", "development workflow", "project setup"],
+      "intent": ["change directory", "move folders", "navigate projects"],
+      "tools": ["bash", "zsh", "terminal"]
     },
-
-    {
-      "id": "git.core",
-      "name": "git",
-      "slug": "git",
-      "summary": "Distributed version control system for source code management.",
-      "domain": "git",
-      "subcategory": "version-control",
-      "platforms": ["cross-platform"],
-      "difficulty": "beginner",
-      "searchTokens": [
-        "source control",
-        "version control",
-        "repository management",
-        "branches"
-      ],
-      "tags": {
-        "primary": ["version-control"],
-        "secondary": ["repositories", "collaboration"]
+    "example": "cd ..",
+    "difficulty": "beginner",
+    "variants": [
+      {
+        "title": "Move Up One Directory",
+        "command": "cd ..",
+        "description": "Navigate to the parent folder.",
+        "example": "cd ..",
+        "difficulty": "beginner"
       },
-      "intent": [
-        "track-changes",
-        "manage-branches",
-        "sync-repository"
-      ],
-      "relatedCommands": ["gh", "git-lfs"],
-      "examples": [
-        "git status",
-        "git commit -m 'message'",
-        "git push origin main"
-      ],
-      "variants": [
-        {
-          "id": "git.clone",
-          "command": "git clone",
-          "title": "Clone Repository",
-          "description": "Download a remote repository locally.",
-          "example": "git clone https://github.com/user/repo.git",
-          "difficulty": "beginner",
-          "tags": ["repositories", "remote"]
-        },
-        {
-          "id": "git.status",
-          "command": "git status",
-          "title": "Repository Status",
-          "description": "Show tracked, modified, and untracked files.",
-          "example": "git status",
-          "difficulty": "beginner",
-          "tags": ["inspection"]
-        },
-        {
-          "id": "git.commit",
-          "command": "git commit -m",
-          "title": "Create Commit",
-          "description": "Commit staged changes with a message.",
-          "example": "git commit -m 'Initial commit'",
-          "difficulty": "beginner",
-          "tags": ["commits"]
-        },
-        {
-          "id": "git.checkout.branch",
-          "command": "git checkout -b",
-          "title": "Create Branch",
-          "description": "Create and switch to a new branch.",
-          "example": "git checkout -b feature/auth",
-          "difficulty": "intermediate",
-          "tags": ["branches"]
-        }
-      ]
+      {
+        "title": "Go To Home Directory",
+        "command": "cd ~",
+        "description": "Return to the user's home directory.",
+        "example": "cd ~",
+        "difficulty": "beginner"
+      }
+    ]
+  },
+  {
+  "name": "docker",
+  "slug": "docker",
+  "summary": "Build and manage containerized applications.",
+  "category": "devops",
+  "tags": {
+    "primary": ["containers", "devops"],
+    "secondary": ["deployment", "images", "virtualization"],
+    "context": ["local development", "backend infrastructure", "cloud deployment"],
+    "intent": ["run containers", "deploy apps", "manage infrastructure"],
+    "tools": ["docker desktop", "kubernetes", "terminal"]
+  },
+  "example": "docker ps",
+  "difficulty": "intermediate",
+  "variants": [
+    {
+      "title": "View Running Containers",
+      "command": "docker ps",
+      "description": "View active Docker containers.",
+      "example": "docker ps",
+      "difficulty": "beginner"
     },
-
     {
-      "id": "node.npm",
-      "name": "npm",
-      "slug": "npm",
-      "summary": "Package manager for Node.js projects.",
-      "domain": "node",
-      "subcategory": "package-manager",
-      "platforms": ["cross-platform"],
-      "difficulty": "beginner",
-      "searchTokens": [
-        "node packages",
-        "install dependencies",
-        "javascript tooling"
-      ],
-      "tags": {
-        "primary": ["package-manager"],
-        "secondary": ["dependencies", "scripts"]
-      },
-      "intent": [
-        "install-packages",
-        "run-scripts",
-        "manage-dependencies"
-      ],
-      "relatedCommands": ["npx", "pnpm", "yarn"],
-      "examples": [
-        "npm install",
-        "npm run dev",
-        "npm test"
-      ],
-      "variants": [
-        {
-          "id": "node.npm.install",
-          "command": "npm install",
-          "title": "Install Dependencies",
-          "description": "Install dependencies from package.json.",
-          "example": "npm install",
-          "difficulty": "beginner",
-          "tags": ["dependencies"]
-        },
-        {
-          "id": "node.npm.install.package",
-          "command": "npm install package-name",
-          "title": "Install Package",
-          "description": "Install a specific package locally.",
-          "example": "npm install express",
-          "difficulty": "beginner",
-          "tags": ["dependencies", "local-install"]
-        },
-        {
-          "id": "node.npm.run.dev",
-          "command": "npm run dev",
-          "title": "Run Development Server",
-          "description": "Execute the development script from package.json.",
-          "example": "npm run dev",
-          "difficulty": "intermediate",
-          "tags": ["scripts", "development"]
-        },
-        {
-          "id": "node.npm.test",
-          "command": "npm test",
-          "title": "Run Tests",
-          "description": "Execute project test scripts.",
-          "example": "npm test",
-          "difficulty": "beginner",
-          "tags": ["testing"]
-        }
-      ]
-    },
-
-    {
-      "id": "node.npx",
-      "name": "npx",
-      "slug": "npx",
-      "summary": "Execute Node.js packages without globally installing them.",
-      "domain": "node",
-      "subcategory": "package-execution",
-      "platforms": ["cross-platform"],
-      "difficulty": "beginner",
-      "searchTokens": [
-        "run package",
-        "temporary cli",
-        "execute node tools"
-      ],
-      "tags": {
-        "primary": ["package-execution"],
-        "secondary": ["cli-tools", "scaffolding"]
-      },
-      "intent": [
-        "run-cli",
-        "scaffold-project",
-        "execute-package"
-      ],
-      "relatedCommands": ["npm", "pnpm dlx", "yarn dlx"],
-      "examples": [
-        "npx create-next-app",
-        "npx prisma studio",
-        "npx eslint ."
-      ],
-      "variants": [
-        {
-          "id": "node.npx.create-next-app",
-          "command": "npx create-next-app@latest",
-          "title": "Create Next.js App",
-          "description": "Scaffold a new Next.js application.",
-          "example": "npx create-next-app@latest my-app",
-          "difficulty": "beginner",
-          "tags": ["scaffolding", "nextjs"]
-        },
-        {
-          "id": "node.npx.prisma.studio",
-          "command": "npx prisma studio",
-          "title": "Open Prisma Studio",
-          "description": "Launch Prisma's database GUI.",
-          "example": "npx prisma studio",
-          "difficulty": "intermediate",
-          "tags": ["database", "orm"]
-        },
-        {
-          "id": "node.npx.eslint",
-          "command": "npx eslint .",
-          "title": "Run ESLint",
-          "description": "Lint project files without a global install.",
-          "example": "npx eslint src",
-          "difficulty": "intermediate",
-          "tags": ["linting", "quality"]
-        }
-      ]
-    },
-
-    {
-      "id": "containers.docker",
-      "name": "docker",
-      "slug": "docker",
-      "summary": "Container platform for packaging and running applications.",
-      "domain": "docker",
-      "subcategory": "containers",
-      "platforms": ["linux", "macos", "windows"],
-      "difficulty": "intermediate",
-      "searchTokens": [
-        "containers",
-        "docker images",
-        "run container",
-        "container logs"
-      ],
-      "tags": {
-        "primary": ["containers"],
-        "secondary": ["images", "deployment"]
-      },
-      "intent": [
-        "build-image",
-        "run-container",
-        "inspect-container"
-      ],
-      "relatedCommands": ["docker-compose", "kubectl"],
-      "examples": [
-        "docker build -t app .",
-        "docker run -p 3000:3000 app"
-      ],
-      "variants": [
-        {
-          "id": "docker.build",
-          "command": "docker build",
-          "title": "Build Image",
-          "description": "Build a Docker image from a Dockerfile.",
-          "example": "docker build -t my-app .",
-          "difficulty": "intermediate",
-          "tags": ["images", "build"]
-        },
-        {
-          "id": "docker.run",
-          "command": "docker run",
-          "title": "Run Container",
-          "description": "Start a container from an image.",
-          "example": "docker run -p 8080:80 nginx",
-          "difficulty": "intermediate",
-          "tags": ["runtime"]
-        },
-        {
-          "id": "docker.logs",
-          "command": "docker logs",
-          "title": "Container Logs",
-          "description": "View logs from a running container.",
-          "example": "docker logs container-id",
-          "difficulty": "intermediate",
-          "tags": ["debugging", "logs"]
-        }
-      ]
-    },
-
-    {
-      "id": "linux.grep",
-      "name": "grep",
-      "slug": "grep",
-      "summary": "Search text using patterns and regular expressions.",
-      "domain": "linux",
-      "subcategory": "text-processing",
-      "platforms": ["linux", "macos"],
-      "difficulty": "intermediate",
-      "searchTokens": [
-        "search text",
-        "regex",
-        "find string",
-        "log search"
-      ],
-      "tags": {
-        "primary": ["search", "text-processing"],
-        "secondary": ["regex", "logs"]
-      },
-      "intent": [
-        "search-files",
-        "filter-output",
-        "analyze-logs"
-      ],
-      "relatedCommands": ["awk", "sed", "find"],
-      "examples": [
-        "grep 'error' app.log",
-        "grep -r TODO ."
-      ],
-      "variants": [
-        {
-          "id": "linux.grep.basic",
-          "command": "grep pattern file.txt",
-          "title": "Basic Search",
-          "description": "Search for a text pattern inside a file.",
-          "example": "grep 'error' log.txt",
-          "difficulty": "intermediate",
-          "tags": ["search"]
-        },
-        {
-          "id": "linux.grep.recursive",
-          "command": "grep -r",
-          "title": "Recursive Search",
-          "description": "Search recursively through directories.",
-          "example": "grep -r 'TODO' .",
-          "difficulty": "intermediate",
-          "tags": ["recursive", "code-search"]
-        },
-        {
-          "id": "linux.grep.invert",
-          "command": "grep -v",
-          "title": "Invert Match",
-          "description": "Show lines that do not match the pattern.",
-          "example": "grep -v 'debug' app.log",
-          "difficulty": "advanced",
-          "tags": ["inverse-filtering"]
-        }
-      ]
-    },
-
-    {
-      "id": "shell.find",
-      "name": "find",
-      "slug": "find",
-      "summary": "Search for files and directories by name, type, or conditions.",
-      "domain": "linux",
-      "subcategory": "filesystem-search",
-      "platforms": ["linux", "macos"],
-      "difficulty": "intermediate",
-      "searchTokens": [
-        "find files",
-        "search directories",
-        "locate files"
-      ],
-      "tags": {
-        "primary": ["filesystem", "search"],
-        "secondary": ["automation", "paths"]
-      },
-      "intent": [
-        "locate-files",
-        "filter-by-type",
-        "bulk-operations"
-      ],
-      "examples": [
-        "find . -name '*.js'",
-        "find . -type d"
-      ],
-      "variants": [
-        {
-          "id": "find.by-name",
-          "command": "find . -name",
-          "title": "Find by Name",
-          "description": "Search for files matching a name pattern.",
-          "example": "find . -name '*.ts'",
-          "difficulty": "intermediate",
-          "tags": ["patterns"]
-        },
-        {
-          "id": "find.by-type",
-          "command": "find . -type",
-          "title": "Find by Type",
-          "description": "Filter by file or directory type.",
-          "example": "find . -type d",
-          "difficulty": "intermediate",
-          "tags": ["directories", "files"]
-        }
-      ]
+      "title": "Build Docker Image",
+      "command": "docker build -t my-app .",
+      "description": "Build a Docker image from a Dockerfile.",
+      "example": "docker build -t my-app .",
+      "difficulty": "intermediate"
     }
   ]
+  },
+  {
+    "name": "echo",
+    "slug": "echo",
+    "summary": "Print text or variables to the terminal output.",
+    "category": "shell",
+    "tags": {
+      "primary": ["shell", "output"],
+      "secondary": ["text", "variables", "scripting"],
+      "context": ["debugging", "development workflow", "terminal basics"],
+      "intent": ["display text", "show variable values", "debug scripts"],
+      "tools": ["bash", "zsh", "terminal"]
+    },
+    "example": "echo \"Hello, World!\"",
+    "difficulty": "beginner",
+    "variants": [
+      {
+        "title": "Print Text",
+        "command": "echo \"Hello, World!\"",
+        "description": "Display a simple message in the terminal.",
+        "example": "echo \"Hello, World!\"",
+        "difficulty": "beginner"
+      },
+      {
+        "title": "Show Variable Value",
+        "command": "echo $HOME",
+        "description": "Print the value of an environment variable.",
+        "example": "echo $HOME",
+        "difficulty": "beginner"
+      },
+      {
+        "title": "Use With Command Substitution",
+        "command": "echo \"Current directory is: $(pwd)\"",
+        "description": "Display the output of a command within a larger message.",
+        "example": "echo \"Current directory is: $(pwd)\"",
+        "difficulty": "intermediate"
+      },
+      {
+        "title": "Print Multiple Lines",
+        "command": "echo -e \"Line 1\\nLine 2\\nLine 3\"",
+        "description": "Use the -e flag to enable interpretation of backslash escapes for multi-line output.",
+        "example": "echo -e \"Line 1\\nLine 2\\nLine 3\"",
+        "difficulty": "intermediate"
+      }
+    ]
+  },
+  {
+    "name": "git",
+    "slug": "git",
+    "summary": "Track code changes and collaborate using version control.",
+    "category": "version control",
+    "tags": {
+      "primary": [
+        "git",
+        "version control"
+      ],
+      "secondary": [
+        "repositories",
+        "branching",
+        "source control"
+      ],
+      "context": [
+        "version control",
+        "team collaboration",
+        "deployment",
+        "development workflow",
+        "source control"
+      ],
+      "intent": [
+       "Track code changes",
+       "Create feature branches",
+       "Collaborate with teams",
+       "Push code to GitHub",
+       "Review project history"
+      ],
+      "tools": [
+        "github",
+        "gitlab",
+        "bitbucket"
+      ]
+    },
+    "example": "git status",
+    "difficulty": "beginner",
+    "variants": [
+  {
+    "title": "Check Repository Status",
+    "command": "git status",
+    "description": "View modified, staged, and untracked files.",
+    "example": "git status",
+    "difficulty": "beginner"
+  },
+  {
+    "title": "Create and Switch Branch",
+    "command": "git checkout -b feature-login",
+    "description": "Create and switch to a new branch.",
+    "example": "git checkout -b feature-login",
+    "difficulty": "intermediate"
+  },
+  {
+    "title": "Push Changes to Remote",
+    "command": "git push origin main",
+    "description": "Push local commits to GitHub.",
+    "example": "git push origin main",
+    "difficulty": "beginner"
+  },
+  {
+    "title": "View Compact Commit History",
+    "command": "git log --oneline",
+    "description": "View commit history in a compact format.",
+    "example": "git log --oneline",
+    "difficulty": "intermediate"
+  },
+  {
+    "title": "Merge Feature Branch",
+    "command": "git merge feature-login",
+    "description": "Merge a feature branch into the current branch.",
+    "example": "git merge feature-login",
+    "difficulty": "intermediate"
+  },
+  {
+    "title": "Rebase Current Branch",
+    "command": "git rebase main",
+    "description": "Reapply commits on top of another base tip.",
+    "example": "git rebase main",
+    "difficulty": "advanced"
+  },
+  {
+    "title": "Stash Uncommitted Changes",
+    "command": "git stash",
+    "description": "Temporarily save changes that are not ready to commit.",
+    "example": "git stash",
+    "difficulty": "intermediate"
+  },
+  {
+    "title": "Reset Previous Commit",
+    "command": "git reset --hard HEAD~1",
+    "description": "Undo the last commit and discard changes.",
+    "example": "git reset --hard HEAD~1",
+    "difficulty": "advanced"
+  },
+  {
+    "title": "Clone Repository",
+    "command": "git clone",
+    "description": "Create a local copy of a remote repository.",
+    "example": "git clone <repository-url>",
+    "difficulty": "beginner"
+  },
+  {
+    "title": "Pull Latest Changes",
+    "command": "git pull",
+    "description": "Fetch and integrate changes from a remote repository.",
+    "example": "git pull origin main",
+    "difficulty": "beginner"
+  },
+  {
+    "title": "Manage Branches",
+    "command": "git branch",
+    "description": "List, create, or delete branches.",
+    "example": "git branch",
+    "difficulty": "beginner"
+  },
+  {
+    "title": "Compare File Changes",
+    "command": "git diff",
+    "description": "Show changes between commits, branches, or working directory.",
+    "example": "git diff HEAD~1",
+    "difficulty": "intermediate"
+  },
+  {
+    "title": "Create Release Tag",
+    "command": "git tag v1.0.0",
+    "description": "Create a new tag for marking releases.",
+    "example": "git tag v1.0.0",
+    "difficulty": "intermediate"
+  },
+  {
+    "title": "Cherry Pick Commit",
+    "command": "git cherry-pick <commit-hash>",
+    "description": "Apply the changes from a specific commit onto the current branch.",
+    "example": "git cherry-pick abc1234",
+    "difficulty": "advanced"
+  },
+  {
+    "title": "Revert Commit Changes",
+    "command": "git revert <commit-hash>",
+    "description": "Create a new commit that undoes the changes from a specific commit.",
+    "example": "git revert abc1234",
+    "difficulty": "advanced"
+  },
+  {
+    "title": "Find Buggy Commit",
+    "command": "git bisect",
+    "description": "Use binary search to find the commit that introduced a bug.",
+    "example": "git bisect start",
+    "difficulty": "advanced"
+  },
+  {
+    "title": "View Line Authors",
+    "command": "git blame <file>",
+    "description": "Show who last modified each line of a file.",
+    "example": "git blame app.js",
+    "difficulty": "intermediate"
+  },
+  {
+    "title": "Archive Repository",
+    "command": "git archive",
+    "description": "Create an archive of files from a repository.",
+    "example": "git archive --format=zip HEAD > source.zip",
+    "difficulty": "intermediate"
+  },
+  {
+    "title": "Manage Git Submodules",
+    "command": "git submodule",
+    "description": "Manage external repositories within a main repository.",
+    "example": "git submodule add <repository-url>",
+    "difficulty": "advanced"
+  },
+  {
+    "title": "Apply Stashed Changes",
+    "command": "git stash pop",
+    "description": "Apply stashed changes and remove them from the stash list.",
+    "example": "git stash pop",
+    "difficulty": "intermediate"
+  },
+  {
+    "title": "Visualize Commit Graph",
+    "command": "git log --graph --oneline",
+    "description": "Visualize commit history as a graph.",
+    "example": "git log --graph --oneline",
+    "difficulty": "intermediate"
+  },
+  {
+    "title": "Remove Untracked Files",
+    "command": "git clean -f",
+    "description": "Remove untracked files from the working directory.",
+    "example": "git clean -f",
+    "difficulty": "advanced"
+  },
+  {
+    "title": "Set Global Username",
+    "command": "git config --global user.name 'Your Name'",
+    "description": "Set the global Git username.",
+    "example": "git config --global user.name 'Your Name'",
+    "difficulty": "beginner"
+  },
+  {
+    "title": "Set Global Email",
+    "command": "git config --global user.email 'your.email@example.com'",
+    "description": "Set the global Git email.",
+    "example": "git config --global user.email 'your.email@example.com'",
+    "difficulty": "beginner"
+  },
+  {
+    "title": "Set Default Git Editor",
+    "command": "git config --global core.editor 'code --wait'",
+    "description": "Set the default editor for Git commit messages.",
+    "example": "git config --global core.editor 'code --wait'",
+    "difficulty": "intermediate"
+  },
+  {
+    "title": "Create Checkout Alias",
+    "command": "git config --global alias.co checkout",
+    "description": "Create a Git alias for the checkout command.",
+    "example": "git config --global alias.co checkout",
+    "difficulty": "intermediate"
+  },
+  {
+    "title": "Create Branch Alias",
+    "command": "git config --global alias.br branch",
+    "description": "Create a Git alias for the branch command.",
+    "example": "git config --global alias.br branch",
+    "difficulty": "intermediate"
+  },
+  {
+    "title": "Create Commit Alias",
+    "command": "git config --global alias.ci commit",
+    "description": "Create a Git alias for the commit command.",
+    "example": "git config --global alias.ci commit",
+    "difficulty": "intermediate"
+  },
+  {
+    "title": "Create Status Alias",
+    "command": "git config --global alias.st status",
+    "description": "Create a Git alias for the status command.",
+    "example": "git config --global alias.st status",
+    "difficulty": "intermediate"
+  }
+]
+  },
+  {
+  "name": "grep",
+  "slug": "grep",
+  "summary": "Search for text patterns inside files and command output.",
+  "category": "searching",
+  "tags": {
+    "primary": ["searching", "text processing"],
+    "secondary": ["logs", "debugging", "filtering"],
+    "context": ["log analysis", "debugging", "codebase searching"],
+    "intent": ["search text", "filter logs", "find matches"],
+    "tools": ["bash", "terminal", "linux"]
+  },
+  "example": "grep -r \"TODO\" .",
+  "difficulty": "intermediate",
+  "variants": [
+    {
+      "title": "Search Recursively",
+      "command": "grep -r \"TODO\" .",
+      "description": "Search all files recursively for matching text.",
+      "example": "grep -r \"TODO\" .",
+      "difficulty": "intermediate"
+    },
+    {
+      "title": "Ignore Case Sensitivity",
+      "command": "grep -i \"error\" logs.txt",
+      "description": "Search text without case sensitivity.",
+      "example": "grep -i \"error\" logs.txt",
+      "difficulty": "beginner"
+    }
+  ]
+  },
+  {
+  "name": "find",
+  "slug": "find",
+  "summary": "Locate files and directories using search criteria.",
+  "category": "filesystem",
+  "tags": {
+    "primary": ["searching", "filesystem"],
+    "secondary": ["directories", "files", "linux"],
+    "context": ["system administration", "debugging", "file management"],
+    "intent": ["locate files", "search filesystem", "audit folders"],
+    "tools": ["bash", "terminal", "linux"]
+  },
+  "example": "find . -name \"*.js\"",
+  "difficulty": "intermediate",
+  "variants": [
+    {
+      "title": "Find JavaScript Files",
+      "command": "find . -name \"*.js\"",
+      "description": "Search recursively for JavaScript files.",
+      "example": "find . -name \"*.js\"",
+      "difficulty": "intermediate"
+    },
+    {
+      "title": "Find Large Files",
+      "command": "find . -size +100M",
+      "description": "Locate files larger than 100MB.",
+      "example": "find . -size +100M",
+      "difficulty": "intermediate"
+    }
+  ]
+  },
+  {
+    "name": "ls",
+    "slug": "ls",
+    "summary": "List files and directories in the current location.",
+    "category": "filesystem",
+    "tags": {
+      "primary": ["filesystem", "navigation"],
+      "secondary": ["directories", "shell", "listing"],
+      "context": ["file management", "terminal navigation", "linux workflow"],
+      "intent": ["view directory contents", "check for hidden files", "inspect project stucture", "verify generated files", "navigate unfamiliar system"],
+      "tools": ["bash", "zsh", "terminal"]
+    },
+    "example": "ls -la",
+    "difficulty": "beginner",
+    "variants": [
+      {
+        "title": "List All Files",
+        "command": "ls -la",
+        "description": "Display hidden files and detailed metadata.",
+        "example": "ls -la",
+        "difficulty": "beginner"
+      },
+      {
+        "title": "Sort Files By Date",
+        "command": "ls -lt",
+        "description": "List files ordered by most recently modified.",
+        "example": "ls -lt",
+        "difficulty": "beginner"
+      }
+    ]
+  },
+  {
+    "name": "mkdir",
+    "slug": "mkdir",
+    "summary": "Create new directories in the filesystem.",
+    "category": "filesystem",
+    "tags": {
+      "primary": ["filesystem", "directories"],
+      "secondary": ["shell", "linux", "file management"],
+      "context": ["terminal navigation", "development workflow", "project setup"],
+      "intent": ["create folders", "organize files", "setup projects"],
+      "tools": ["bash", "zsh", "terminal"]
+    },
+    "example": "mkdir new-folder",
+    "difficulty": "beginner",
+    "variants": [
+      {
+        "title": "Create Single Directory",
+        "command": "mkdir new-folder",
+        "description": "Create a new directory named 'new-folder'.",
+        "example": "mkdir new-folder",
+        "difficulty": "beginner"
+      },
+      {
+        "title": "Create Nested Directories",
+        "command": "mkdir -p parent/child/grandchild",
+        "description": "Create nested directories in one command using the -p flag.",
+        "example": "mkdir -p parent/child/grandchild",
+        "difficulty": "intermediate"
+      },
+      {
+        "title": "Create Multiple Directories",
+        "command": "mkdir folder1 folder2 folder3",
+        "description": "Create multiple directories at once by listing them in the command.",
+        "example": "mkdir folder1 folder2 folder3",
+        "difficulty": "beginner"
+      },
+      {
+        "title": "Create Directory With Permissions",
+        "command": "mkdir -m 755 secure-folder",
+        "description": "Create a directory with specific permissions using the -m flag.",
+        "example": "mkdir -m 755 secure-folder",
+        "difficulty": "intermediate"
+      },
+      {
+        "title": "Create Directory With Verbose Output",
+        "command": "mkdir -v new-folder",
+        "description": "Create a directory and display a message for each created directory.",
+        "example": "mkdir -v new-folder",
+        "difficulty": "beginner"
+      },
+      {
+        "title": "Create Directory With Parent Check",
+        "command": "mkdir -p parent/child && echo \"Directories created\"",
+        "description": "Create nested directories and confirm creation with a message.",
+        "example": "mkdir -p parent/child && echo \"Directories created\"",
+        "difficulty": "intermediate"
+      },
+      {
+        "title": "Create Directory With Custom Owner",
+        "command": "sudo mkdir -m 700 private-folder",
+        "description": "Create a directory with restricted permissions using sudo.",
+        "example": "sudo mkdir -m 700 private-folder",
+        "difficulty": "advanced"
+      },
+      {
+        "title": "Create Directory With Timestamp",
+        "command": "mkdir -p $(date +%Y-%m-%d)-backup",
+        "description": "Create a directory with the current date in its name.",
+        "example": "mkdir -p $(date +%Y-%m-%d)-backup",
+        "difficulty": "intermediate"
+      },
+      {
+        "title": "Create Directory With Custom Group",
+        "command": "sudo mkdir -m 770 shared-folder && sudo chgrp developers shared-folder",
+        "description": "Create a directory with group permissions and assign it to a specific group.",
+        "example": "sudo mkdir -m 770 shared-folder && sudo chgrp developers shared-folder",
+        "difficulty": "advanced"
+      }
+    ]
+  },
+  {
+    "name": "mv",
+    "slug": "mv",
+    "summary": "Move or rename files and directories.",
+    "category": "filesystem",
+    "tags": {
+      "primary": ["filesystem", "file management"],
+      "secondary": ["shell", "linux", "directories"],
+      "context": ["terminal navigation", "development workflow", "project organization"],
+      "intent": ["move files", "rename folders", "organize projects"],
+      "tools": ["bash", "zsh", "terminal"]
+    },
+    "example": "mv old-name.txt new-name.txt",
+    "difficulty": "beginner",
+    "variants": [
+      {
+        "title": "Rename File",
+        "command": "mv old-name.txt new-name.txt",
+        "description": "Rename a file from 'old-name.txt' to 'new-name.txt'.",
+        "example": "mv old-name.txt new-name.txt",
+        "difficulty": "beginner"
+      },
+      {
+        "title": "Move File to Different Directory",
+        "command": "mv file.txt /path/to/destination/",
+        "description": "Move a file to a different directory.",
+        "example": "mv file.txt /path/to/destination/",
+        "difficulty": "beginner"
+      },
+      {
+        "title": "Move Multiple Files to Directory",
+        "command": "mv file1.txt file2.txt /path/to/destination/",
+        "description": "Move multiple files to a specified directory.",
+        "example": "mv file1.txt file2.txt /path/to/destination/",
+        "difficulty": "intermediate"
+      },
+      {
+        "title": "Rename Directory",
+        "command": "mv old-folder new-folder",
+        "description": "Rename a directory from 'old-folder' to 'new-folder'.",
+        "example": "mv old-folder new-folder",
+        "difficulty": "beginner"
+      },
+      {
+        "title": "Move Directory to Different Location",
+        "command": "mv my-folder /path/to/destination/",
+        "description": "Move a directory and its contents to a different location.",
+        "example": "mv my-folder /path/to/destination/",
+        "difficulty": "intermediate"
+      },
+      {
+        "title": "Move File With Confirmation Prompt",
+        "command": "mv -i file.txt /path/to/destination/",
+        "description": "Move a file with a prompt for confirmation if the destination file already exists.",
+        "example": "mv -i file.txt /path/to/destination/",
+        "difficulty": "intermediate"
+      },
+      {
+        "title": "Move Directory With Verbose Output",
+        "command": "mv -v my-folder /path/to/destination/",
+        "description": "Move a directory and display a message for each moved file.",
+        "example": "mv -v my-folder /path/to/destination/",
+        "difficulty": "intermediate"
+      },
+      {
+        "title": "Move File With Backup",
+        "command": "mv --backup=numbered file.txt /path/to/destination/",
+        "description": "Move a file and create a numbered backup if the destination file already exists.",
+        "example": "mv --backup=numbered file.txt /path/to/destination/",
+        "difficulty": "advanced"
+      },
+      {
+        "title": "Move Directory With Parent Check",
+        "command": "mv my-folder /path/to/destination/ && echo \"Directory moved\"",
+        "description": "Move a directory and confirm the move with a message.",
+        "example": "mv my-folder /path/to/destination/ && echo \"Directory moved\"",
+        "difficulty": "intermediate"
+      },
+      {
+        "title": "Move File With Custom Suffix for Backups",
+        "command": "mv --backup=existing file.txt /path/to/destination/",
+        "description": "Move a file and create a backup with a custom suffix if the destination file already exists.",
+        "example": "mv --backup=existing file.txt /path/to/destination/",
+        "difficulty": "advanced"
+      },
+      {
+        "title": "Move Directory With Custom Backup Directory",
+        "command": "mv --backup=directory my-folder /path/to/destination/",
+        "description": "Move a directory and create backups in a specified directory if the destination already exists.",
+        "example": "mv --backup=directory my-folder /path/to/destination/",
+        "difficulty": "advanced"
+      }
+    ]
+  },
+  {
+  "name": "npm",
+  "slug": "npm",
+  "summary": "Manage JavaScript packages and project scripts.",
+  "category": "package management",
+  "tags": {
+    "primary": ["nodejs", "package management"],
+    "secondary": ["javascript", "dependencies", "frontend"],
+    "context": ["project setup", "development workflow", "dependency management"],
+    "intent": ["install packages", "run scripts", "manage dependencies"],
+    "tools": ["nodejs", "vite", "react"]
+  },
+  "example": "npm install",
+  "difficulty": "beginner",
+  "variants": [
+    {
+      "title": "Install Dependencies",
+      "command": "npm install",
+      "description": "Install all packages from package.json.",
+      "example": "npm install",
+      "difficulty": "beginner"
+    },
+    {
+      "title": "Run Development Server",
+      "command": "npm run dev",
+      "description": "Start the local development server.",
+      "example": "npm run dev",
+      "difficulty": "beginner"
+    }
+  ]
+},
+
+  {
+  "name": "npx",
+  "slug": "npx",
+  "summary": "Run Node.js packages without global installation.",
+  "category": "tooling",
+  "tags": {
+    "primary": ["nodejs", "tooling"],
+    "secondary": ["frontend", "project setup", "javascript"],
+    "context": ["development workflow", "cli utilities", "scaffolding"],
+    "intent": ["run packages", "scaffold apps", "test tools"],
+    "tools": ["vite", "create-react-app", "nodejs"]
+  },
+  "example": "npx create-vite@latest",
+  "difficulty": "beginner",
+  "variants": [
+    {
+      "title": "Create Vite Project",
+      "command": "npx create-vite@latest",
+      "description": "Scaffold a new Vite application.",
+      "example": "npx create-vite@latest",
+      "difficulty": "beginner"
+    },
+    {
+      "title": "Run Temporary Package",
+      "command": "npx cowsay \"Hello\"",
+      "description": "Execute a package without installing globally.",
+      "example": "npx cowsay \"Hello\"",
+      "difficulty": "beginner"
+    },
+    {
+      "title": "Test Package Version",
+      "command": "npx eslint --version",
+      "description": "Check the version of a package without installing.",
+      "example": "npx eslint --version",
+      "difficulty": "beginner"
+    },
+    {
+      "title": "Run Local Package",
+      "command": "npx webpack --config webpack.config.js",
+      "description": "Execute a locally installed package.",
+      "example": "npx webpack --config webpack.config.js",
+      "difficulty": "intermediate"
+    },
+    {
+      "title": "Use Latest Package Version",
+      "command": "npx create-react-app@latest my-app",
+      "description": "Run the latest version of a package without installing.",
+      "example": "npx create-react-app@latest my-app",
+      "difficulty": "beginner"
+    },
+    {
+      "title": "Run Package Binary",
+      "command": "npx serve",
+      "description": "Execute a package's binary command.",
+      "example": "npx serve",
+      "difficulty": "beginner"
+    },
+    {
+      "title": "Test Package Functionality",
+      "command": "npx jest",
+      "description": "Run tests using a package without installing globally.",
+      "example": "npx jest",
+      "difficulty": "intermediate"
+    },
+    {
+      "title": "Run Package with Arguments",
+      "command": "npx eslint src --fix",
+      "description": "Execute a package with specific arguments.",
+      "example": "npx eslint src --fix",
+      "difficulty": "intermediate"
+    },
+    {
+      "title": "Use Package from GitHub",
+      "command": "npx github:username/repo",
+      "description": "Run a package directly from a GitHub repository.",
+      "example": "npx github:username/repo",
+      "difficulty": "intermediate"
+    },
+    {
+      "title": "Run Package with Environment Variables",
+      "command": "NODE_ENV=production npx webpack",
+      "description": "Execute a package with environment variables.",
+      "example": "NODE_ENV=production npx webpack",
+      "difficulty": "intermediate"
+    },
+    {
+      "title": "Use Package from Local Path",
+      "command": "npx /path/to/local/package",
+      "description": "Run a package from a local file path.",
+      "example": "npx /path/to/local/package",
+      "difficulty": "intermediate"
+    },
+    {
+      "title": "Run Package with Custom Registry",
+      "command": "npx --registry https://custom-registry.com package-name",
+      "description": "Execute a package using a custom npm registry.",
+      "example": "npx --registry https://custom-registry.com package-name",
+      "difficulty": "intermediate"
+    },
+    {
+      "title": "Use Package from GitHub Gist",
+      "command": "npx gist:username/gist-id",
+      "description": "Run a package directly from a GitHub Gist.",
+      "example": "npx gist:username/gist-id",
+      "difficulty": "intermediate"
+    },
+    {
+      "title": "Run Package with Specific Node Version",
+      "command": "npx -p node@14 package-name",
+      "description": "Execute a package using a specific Node.js version.",
+      "example": "npx -p node@14 package-name",
+      "difficulty": "intermediate"
+    },
+    {
+      "title": "Use Package from Local Tarball",
+      "command": "npx /path/to/package.tar.gz",
+      "description": "Run a package from a local tarball file.",
+      "example": "npx /path/to/package.tar.gz",
+      "difficulty": "intermediate"
+    },
+    {
+      "title": "Run Package with Custom Cache Directory",
+      "command": "npx --cache /path/to/cache package-name",
+      "description": "Execute a package using a custom cache directory.",
+      "example": "npx --cache /path/to/cache package-name",
+      "difficulty": "intermediate"
+    },
+    {
+      "title": "Use Package from GitHub Branch",
+      "command": "npx github:username/repo#branch",
+      "description": "Run a package directly from a specific branch of a GitHub repository.",
+      "example": "npx github:username/repo#branch",
+      "difficulty": "intermediate"
+    },
+    {
+      "title": "Run Package with Custom Log Level",
+      "command": "npx --loglevel verbose package-name",
+      "description": "Execute a package with a custom log level for more detailed output.",
+      "example": "npx --loglevel verbose package-name",
+      "difficulty": "intermediate"
+    },
+    {
+      "title": "Use Package from GitHub Release",
+      "command": "npx github:username/repo#v1.0.0",
+      "description": "Run a package directly from a specific release of a GitHub repository.",
+      "example": "npx github:username/repo#v1.0.0",
+      "difficulty": "intermediate"
+     },
+     {
+      "title": "Run Package with Custom Timeout",
+      "command": "npx --timeout 60000 package-name",
+      "description": "Execute a package with a custom timeout setting.",
+      "example": "npx --timeout 60000 package-name",
+      "difficulty": "intermediate"
+     },
+     {
+      "title": "Use Package from GitHub Pull Request",
+      "command": "npx github:username/repo#pull/123",
+      "description": "Run a package directly from a specific pull request of a GitHub repository.",
+      "example": "npx github:username/repo#pull/123",
+      "difficulty": "intermediate"
+     },
+     {
+      "title": "Run Package with Custom User Agent",
+      "command": "npx --user-agent \"My Custom User Agent\" package-name",
+      "description": "Execute a package with a custom user agent string.",
+      "example": "npx --user-agent \"My Custom User Agent\" package-name",
+      "difficulty": "intermediate"
+     },
+     {
+      "title": "Use Package from GitHub Commit",
+      "command": "npx github:username/repo#commit-sha",
+      "description": "Run a package directly from a specific commit of a GitHub repository.",
+      "example": "npx github:username/repo#commit-sha",
+      "difficulty": "intermediate"
+     },
+     {
+      "title": "Run Package with Custom Environment Variables",
+      "command": "MY_VAR=value npx package-name",
+      "description": "Execute a package with custom environment variables.",
+      "example": "MY_VAR=value npx package-name",
+      "difficulty": "intermediate"
+     },
+     {
+      "title": "Use Package from GitHub Tag",
+      "command": "npx github:username/repo#tag",
+      "description": "Run a package directly from a specific tag of a GitHub repository.",
+      "example": "npx github:username/repo#tag",
+      "difficulty": "intermediate"
+     },
+     {
+      "title": "Run Package with Custom Node Options",
+      "command": "npx --node-options=\"--max-old-space-size=4096\" package-name",
+      "description": "Execute a package with custom Node.js options.",
+      "example": "npx --node-options=\"--max-old-space-size=4096\" package-name",
+      "difficulty": "intermediate"
+     },
+     {
+      "title": "Use Package from GitHub Subdirectory",
+      "command": "npx github:username/repo/path/to/package",
+      "description": "Run a package directly from a specific subdirectory of a GitHub repository.",
+      "example": "npx github:username/repo/path/to/package",
+      "difficulty": "intermediate"
+     },
+     {
+      "title": "Run Package with Custom Registry and Cache",
+      "command": "npx --registry https://custom-registry.com --cache /path/to/cache package-name",
+      "description": "Execute a package using both a custom npm registry and cache directory.",
+      "example": "npx --registry https://custom-registry.com --cache /path/to/cache package-name",
+      "difficulty": "intermediate"
+     }
+    ]
+  },
+  {
+    "name": "pwd",
+    "slug": "pwd",
+    "summary": "Display the current working directory path.",
+    "category": "filesystem",
+    "tags": {
+      "primary": ["filesystem", "navigation"],
+      "secondary": ["directories", "shell", "terminal basics"],
+      "context": ["terminal navigation", "development workflow", "project setup"],
+      "intent": ["show current directory", "display path", "confirm location"],
+      "tools": ["bash", "zsh", "terminal"]
+    },
+    "example": "pwd",
+    "difficulty": "beginner",
+    "variants": [
+      {
+        "title": "Show Current Directory",
+        "command": "pwd",
+        "description": "Print the full path of the current working directory.",
+        "example": "pwd",
+        "difficulty": "beginner"
+      },
+      {
+        "title": "Use With Subshell",
+        "command": "(cd /tmp && pwd)",
+        "description": "Show the current directory within a subshell.",
+        "example": "(cd /tmp && pwd)",
+        "difficulty": "intermediate"
+      },
+      {
+        "title": "Display Directory With Environment Variable",
+        "command": "echo $PWD",
+        "description": "Print the current directory using the PWD environment variable.",
+        "example": "echo $PWD",
+        "difficulty": "beginner"
+      },
+      {
+        "title": "Show Current Directory With Absolute Path",
+        "command": "pwd -P",
+        "description": "Print the physical directory path, resolving any symbolic links.",
+        "example": "pwd -P",
+        "difficulty": "intermediate"
+      },
+      {
+        "title": "Show Current Directory With Logical Path",
+        "command": "pwd -L",
+        "description": "Print the logical directory path, which may include symbolic links.",
+        "example": "pwd -L",
+        "difficulty": "intermediate"
+      },
+      {
+        "title": "Use With Command Substitution",
+        "command": "cd /tmp && echo \"Current directory is: $(pwd)\"",
+        "description": "Display the current directory within a larger command using command substitution.",
+        "example": "cd /tmp && echo \"Current directory is: $(pwd)\"",
+        "difficulty": "intermediate"
+      },
+      {
+        "title": "Show Current Directory With Custom Prompt",
+        "command": "PS1='Current dir: \\w$ ' bash",
+        "description": "Start a new shell with a custom prompt that shows the current directory.",
+        "example": "PS1='Current dir: \\w$ ' bash",
+        "difficulty": "advanced"
+      },
+      {
+        "title": "Display Current Directory With Color",
+        "command": "pwd | GREP_COLOR='01;34' grep --color=always .",
+        "description": "Print the current directory with colored output.",
+        "example": "pwd | GREP_COLOR='01;34' grep --color=always .",
+        "difficulty": "advanced"
+      }
+    ]
+  }, 
+  {
+    "name": "rm",
+    "slug": "rm",
+    "summary": "Remove files and directories from the filesystem.",
+    "category": "filesystem",
+    "tags": {
+      "primary": ["filesystem", "file management"],
+      "secondary": ["shell", "linux", "directories"],
+      "context": ["terminal navigation", "development workflow", "project cleanup"],
+      "intent": ["delete files", "remove folders", "cleanup projects"],
+      "tools": ["bash", "zsh", "terminal"]
+    },
+    "example": "rm file.txt",
+    "difficulty": "beginner",
+    "variants": [
+      {
+        "title": "Remove Single File",
+        "command": "rm file.txt",
+        "description": "Delete a single file named 'file.txt'.",
+        "example": "rm file.txt",
+        "difficulty": "beginner"
+      },
+      {
+        "title": "Remove Directory Recursively",
+        "command": "rm -r old-folder",
+        "description": "Delete a directory and all of its contents using the -r flag.",
+        "example": "rm -r old-folder",
+        "difficulty": "intermediate"
+      },
+      {
+        "title": "Force Remove File Without Prompt",
+        "command": "rm -f important.log",
+        "description": "Delete a file without confirmation using the -f flag.",
+        "example": "rm -f important.log",
+        "difficulty": "advanced"
+      },
+      {
+        "title": "Remove Multiple Files",
+        "command": "rm file1.txt file2.txt file3.txt",
+        "description": "Delete multiple files at once by listing them in the command.",
+        "example": "rm file1.txt file2.txt file3.txt",
+        "difficulty": "beginner"
+      },
+      {
+        "title": "Remove Empty Directory",
+        "command": "rmdir empty-folder",
+        "description": "Delete an empty directory using the rmdir command.",
+        "example": "rmdir empty-folder",
+        "difficulty": "beginner"
+       }
+     ]
+  }
+
+]
 }
